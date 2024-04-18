@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ChangeNotifComment" xml:space="preserve">
+    <value>Change Notification: {0}</value>
+  </data>
+  <data name="CostComment" xml:space="preserve">
+    <value>Cost: {0}</value>
+  </data>
+  <data name="DFLComment" xml:space="preserve">
+    <value>DFL: {0}</value>
+  </data>
+  <data name="DnMasterComment" xml:space="preserve">
+    <value>DN master: {0}</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="FFLComment" xml:space="preserve">
+    <value>FFL: {0}</value>
+  </data>
+  <data name="GCComment" xml:space="preserve">
+    <value>Global Catalog</value>
+  </data>
+  <data name="IMComment" xml:space="preserve">
+    <value>IM: {0}</value>
+  </data>
+  <data name="IntervalComment" xml:space="preserve">
+    <value>Interval: {0}</value>
+  </data>
+  <data name="IstgOutput" xml:space="preserve">
+    <value>ISTG: {0}</value>
+  </data>
+  <data name="NameComment" xml:space="preserve">
+    <value>Name: {0}</value>
+  </data>
+  <data name="PDCComment" xml:space="preserve">
+    <value>PDC: {0}</value>
+  </data>
+  <data name="Raw" xml:space="preserve">
+    <value>Raw</value>
+  </data>
+  <data name="RIDComment" xml:space="preserve">
+    <value>RID: {0}</value>
+  </data>
+  <data name="RodcComment" xml:space="preserve">
+    <value>Read Only Domain Controller</value>
+  </data>
+  <data name="Schedule1PerHour" xml:space="preserve">
+    <value>once per hour</value>
+  </data>
+  <data name="Schedule2PerHour" xml:space="preserve">
+    <value>twice per hour</value>
+  </data>
+  <data name="Schedule3Hours" xml:space="preserve">
+    <value>once every 3 hours</value>
+  </data>
+  <data name="Schedule4PerHour" xml:space="preserve">
+    <value>four times per hour</value>
+  </data>
+  <data name="ScheduleComent" xml:space="preserve">
+    <value>Schedule: {0}</value>
+  </data>
+  <data name="ScheduleCustom" xml:space="preserve">
+    <value>custom</value>
+  </data>
+  <data name="ScheduleNone" xml:space="preserve">
+    <value>none</value>
+  </data>
+  <data name="ScheduleNonStop" xml:space="preserve">
+    <value>24 x 7</value>
+  </data>
+  <data name="SchMasterComment" xml:space="preserve">
+    <value>Sch master: {0}</value>
+  </data>
+  <data name="SiteComment" xml:space="preserve">
+    <value>Site: {0}</value>
+  </data>
+  <data name="TrustDirectionComment" xml:space="preserve">
+    <value>Direction: {0}</value>
+  </data>
+  <data name="TrustTypeComment" xml:space="preserve">
+    <value>Type: {0}</value>
+  </data>
+  <data name="TwoLineStr" xml:space="preserve">
+    <value>{0}\n{1}</value>
+  </data>
+  <data name="UnKnown" xml:space="preserve">
+    <value>UnKnown</value>
+  </data>
+  <data name="Ver2000" xml:space="preserve">
+    <value>2000</value>
+  </data>
+  <data name="Ver2003" xml:space="preserve">
+    <value>2003</value>
+  </data>
+  <data name="Ver2008" xml:space="preserve">
+    <value>2008</value>
+  </data>
+  <data name="Ver2012" xml:space="preserve">
+    <value>2012</value>
+  </data>
+  <data name="Ver2016" xml:space="preserve">
+    <value>2016</value>
+  </data>
+  <data name="Ver2019" xml:space="preserve">
+    <value>2019</value>
+  </data>
+  <data name="Win2000" xml:space="preserve">
+    <value>Windows 2000</value>
+  </data>
+  <data name="Win2000Mix" xml:space="preserve">
+    <value>Windows 2000 Mixed Mode</value>
+  </data>
+  <data name="Win2000Native" xml:space="preserve">
+    <value>Windows 2000 Native Mode</value>
+  </data>
+  <data name="Win2003Interim" xml:space="preserve">
+    <value>Windows 2003 Interim</value>
+  </data>
+  <data name="Win2003Native" xml:space="preserve">
+    <value>Windows 2003 Native</value>
+  </data>
+  <data name="Win2008" xml:space="preserve">
+    <value>Windows 2008</value>
+  </data>
+  <data name="Win2008R2" xml:space="preserve">
+    <value>Windows 2008 R2</value>
+  </data>
+  <data name="Win2012" xml:space="preserve">
+    <value>Windows Server 2012</value>
+  </data>
+  <data name="Win2012R2" xml:space="preserve">
+    <value>Windows Server 2012 R2</value>
+  </data>
+  <data name="Win2016" xml:space="preserve">
+    <value>Windows Server 2016</value>
+  </data>
+  <data name="Win2019" xml:space="preserve">
+    <value>Windows Server 2019</value>
+  </data>
+</root>

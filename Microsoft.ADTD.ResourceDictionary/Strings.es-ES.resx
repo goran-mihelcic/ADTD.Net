@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutHeader" xml:space="preserve">
+    <value>Creador de diagramas de tpología de Active Directory</value>
+  </data>
+  <data name="AboutMnu" xml:space="preserve">
+    <value>Acerca de</value>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Navegar</value>
+  </data>
+  <data name="CancelBtn" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="CloseBtn" xml:space="preserve">
+    <value>Cerrar</value>
+  </data>
+  <data name="ColorcodeServers" xml:space="preserve">
+    <value>Servidores de código de colores por dominio</value>
+  </data>
+  <data name="ColorcodeServersToolTip" xml:space="preserve">
+    <value>Marque esta casilla si desea que en el dibujo los servidores estén codificados por colores según el dominio.</value>
+  </data>
+  <data name="ConfigurationFile" xml:space="preserve">
+    <value>ApplicationConfiguration-ES.xml</value>
+  </data>
+  <data name="ContentsMnu" xml:space="preserve">
+    <value>Contenidos</value>
+  </data>
+  <data name="DataSource" xml:space="preserve">
+    <value>Origen de datos</value>
+  </data>
+  <data name="Debug" xml:space="preserve">
+    <value>Depuración</value>
+  </data>
+  <data name="DescriptionLbl" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="DevelopedBy" xml:space="preserve">
+    <value>Desarrollado por</value>
+  </data>
+  <data name="DirectoryAuthenticationTitle" xml:space="preserve">
+    <value>Autenticación de Directorio</value>
+  </data>
+  <data name="DomainLbl" xml:space="preserve">
+    <value>Dominio:</value>
+  </data>
+  <data name="DrawBtn" xml:space="preserve">
+    <value>¡Dibujar!</value>
+  </data>
+  <data name="DrawFQDNServerNames" xml:space="preserve">
+    <value>Dibujar los nombres FQDN de los servidores</value>
+  </data>
+  <data name="DrawFQDNServerNamesToolTip" xml:space="preserve">
+    <value>Marque esta casilla si desea que los nombres FQDN de servidor aparezcan en el dibujo.</value>
+  </data>
+  <data name="DrawServers" xml:space="preserve">
+    <value>Dibujar Servidores</value>
+  </data>
+  <data name="ExitMnu" xml:space="preserve">
+    <value>Salir</value>
+  </data>
+  <data name="FileMnu" xml:space="preserve">
+    <value>Archivo</value>
+  </data>
+  <data name="ForestLabel" xml:space="preserve">
+    <value>Bosque:</value>
+  </data>
+  <data name="ForestToolTip" xml:space="preserve">
+    <value>Nombre DNS de bosque válido</value>
+  </data>
+  <data name="HelpMnu" xml:space="preserve">
+    <value>Ayuda</value>
+  </data>
+  <data name="IncludeServerVersion" xml:space="preserve">
+    <value>Incluir la versión del Servidor</value>
+  </data>
+  <data name="IncludeServerVersionToolTip" xml:space="preserve">
+    <value>Marque esta casilla si desea que el número de versión del sistema operativo se incluya en el dibujo.</value>
+  </data>
+  <data name="InitialStatus" xml:space="preserve">
+    <value>Aquí viene el estado</value>
+  </data>
+  <data name="LanguageMnu" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="LogOnBtn" xml:space="preserve">
+    <value>LogOn</value>
+  </data>
+  <data name="MainWindowTitle" xml:space="preserve">
+    <value>Creador de diagramas de tpología de Active Directory</value>
+  </data>
+  <data name="MyTitle" xml:space="preserve">
+    <value>Arquitecto de Soluciones en la Nube</value>
+  </data>
+  <data name="OKBtn" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Opciones</value>
+  </data>
+  <data name="PasswordLbl" xml:space="preserve">
+    <value>Contraseña:</value>
+  </data>
+  <data name="Selection" xml:space="preserve">
+    <value>Selección</value>
+  </data>
+  <data name="ServerLabel" xml:space="preserve">
+    <value>Servidor:</value>
+  </data>
+  <data name="ServerToolTip" xml:space="preserve">
+    <value>Déjelo en blanco para seleccionar automáticamente el servidor de destino o introduzca un nombre de servidor válido</value>
+  </data>
+  <data name="StatusArranging" xml:space="preserve">
+    <value>Organizando el diagrama</value>
+  </data>
+  <data name="StatusCollecting" xml:space="preserve">
+    <value>Recopilando datos…</value>
+  </data>
+  <data name="StatusCompleted" xml:space="preserve">
+    <value>Dibujo completado</value>
+  </data>
+  <data name="StatusConnected" xml:space="preserve">
+    <value>Conectado…</value>
+  </data>
+  <data name="StatusConnecting" xml:space="preserve">
+    <value>Conectando…</value>
+  </data>
+  <data name="StatusConnectionFailed" xml:space="preserve">
+    <value>Fallo de conexión</value>
+  </data>
+  <data name="StatusConnections" xml:space="preserve">
+    <value>Agregando conexiones</value>
+  </data>
+  <data name="StatusCreating" xml:space="preserve">
+    <value>Creando el documento Visio</value>
+  </data>
+  <data name="StatusCsv" xml:space="preserve">
+    <value>Salvando datos CSV…</value>
+  </data>
+  <data name="StatusNodes" xml:space="preserve">
+    <value>Agregando nodos</value>
+  </data>
+  <data name="StatusSaving" xml:space="preserve">
+    <value>Salvando el documento Visio</value>
+  </data>
+  <data name="StatusXml" xml:space="preserve">
+    <value>Salvando datos XML…</value>
+  </data>
+  <data name="ToolsMnu" xml:space="preserve">
+    <value>Herramientas</value>
+  </data>
+  <data name="UserLbl" xml:space="preserve">
+    <value>Usuario:</value>
+  </data>
+  <data name="ValidateBtn" xml:space="preserve">
+    <value>Validar</value>
+  </data>
+  <data name="VersionLbl" xml:space="preserve">
+    <value>Versión</value>
+  </data>
+</root>

@@ -1,0 +1,46 @@
+﻿<Window x:Class="Mihelcic.Net.Visio.Diagrammer.Options"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="clr-namespace:Mihelcic.Net.Visio.Diagrammer"
+        xmlns:prop="clr-namespace:Mihelcic.Net.Visio.Diagrammer.Properties"
+        xmlns:res="clr-namespace:Mihelcic.Net.Visio;assembly=Mihelcic.Net.Visio.ResourceDictionary"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner" 
+        Title="{x:Static res:Strings.Options}" Height="400" Width="640" 
+        Style="{DynamicResource WindowStyle}">
+    <Window.Resources>
+        <prop:Settings x:Key="myDataSource"/>
+    </Window.Resources>
+    <Window.BindingGroup>
+        <BindingGroup Name="myBindingGroup" />
+    </Window.BindingGroup>
+    <Window.DataContext>
+        <Binding Source="{StaticResource myDataSource}"/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <TabControl Grid.Row="1" Name="SSTab1" Margin="20,0">
+            <TabItem Name="_SSTab1_TabPage1" Header="{x:Static res:Strings.Debug}" Width="60">
+                <DataGrid Name="grdItem" ItemsSource="{Binding Options, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" GridLinesVisibility="None" >
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <my:ItemControl DataContext="{Binding}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+        <StackPanel Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Name="cmdOK" Content="{x:Static res:Strings.OKBtn}" Width="60" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25" Margin="0,0,5,0" IsDefault="True" Click="cmdOK_Click"/>
+            <!--<Button Name="cmdCancel" Content="Cancel" Width="60" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25" Margin="5,0,20,0" IsCancel="True" />-->
+        </StackPanel>
+    </Grid>
+</Window>

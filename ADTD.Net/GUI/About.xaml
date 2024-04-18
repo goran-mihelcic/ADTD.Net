@@ -1,0 +1,36 @@
+﻿<Window x:Class="Mihelcic.Net.Visio.Diagrammer.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:res="clr-namespace:Mihelcic.Net.Visio;assembly=Mihelcic.Net.Visio.ResourceDictionary"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="About" Height="300" Width="440" Loaded="Window_Loaded" ResizeMode="NoResize" WindowStyle="ToolWindow">
+    <Window.Resources>
+        <BitmapImage x:Key="MyImageSource" UriSource="pack://application:,,,/Mihelcic.Net.Visio.Diagrammer;component/Resources/ADMap32x32-256.ico" />
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Image Grid.Column="0" Source="{StaticResource MyImageSource}" VerticalAlignment="Top" Stretch="None" Margin="0,30,0,0" />
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="27" />
+                <RowDefinition Height="27" />
+                <RowDefinition />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="1" Content="{x:Static res:Strings.AboutHeader}" 
+                   Grid.RowSpan="2" Height="28" HorizontalAlignment="Left" 
+                   Margin="20,0,0,0" Name="lblTitle" VerticalAlignment="Top" />
+            <Label Grid.Row="2" Content="{x:Static res:Strings.VersionLbl}"
+                   Grid.RowSpan="2" Height="28" HorizontalAlignment="Left" 
+                   Margin="20,0,0,0" Name="lblVersion" VerticalAlignment="Top" />
+            <TextBlock Grid.Row="3" Height="139" HorizontalAlignment="Left" 
+                   Margin="25,5,0,0" Name="lblDescription" VerticalAlignment="Top" 
+                       Text="{x:Static res:Strings.DescriptionLbl}" TextWrapping="Wrap" Width="307" />
+            <Button Grid.Row="4" Name="btnOK" Content="{x:Static res:Strings.OKBtn}" Width="70" Height="25" 
+                    HorizontalAlignment="Right" Margin="0,0,20,0" IsDefault="True" Click="btnOK_Click" />
+        </Grid>
+    </Grid>
+</Window>

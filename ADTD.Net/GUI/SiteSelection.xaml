@@ -1,0 +1,123 @@
+﻿<UserControl x:Class="Microsoft.ADTD.Net.SiteSelection"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition/>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <CheckBox Grid.Row="0" Grid.Column="0" Name="chkDrawSites" 
+                      Content="Draw Sites" VerticalAlignment="Center" 
+                      Margin="20,0,0,0" 
+                      IsChecked="{Binding Path=Default.Sit_DrawSitesState, UpdateSourceTrigger=Explicit}"/>
+            <CheckBox Grid.Row="0" Grid.Column="1" Name="chkIncludeServers" 
+                      Content="Include Servers" VerticalAlignment="Center" 
+                      Margin="20,0,0,0" 
+                      IsEnabled="{Binding ElementName=chkDrawSites,Path=IsChecked,Mode=OneWay}"
+                      IsChecked="{Binding Path=Default.Sit_IncludeServers, UpdateSourceTrigger=Explicit}"/>
+        </Grid>
+        <GroupBox Grid.Row="1" Grid.ColumnSpan="2" Header="Draw Site:"
+                  IsEnabled="{Binding ElementName=chkDrawSites,Path=IsChecked,Mode=OneWay}">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="chkAllSites" 
+                          Content="Entire Forest" 
+                          IsChecked="True"
+                          IsEnabled="False"
+                          VerticalAlignment="Center" 
+                          Margin="20,0,0,0" 
+                          Checked="chkAllSites_Checked" Unchecked="chkAllSites_Checked"/>
+                <ComboBox Name="selSite" 
+                          IsEditable="False" 
+                          IsEnabled="False"
+                          VerticalAlignment="Center" 
+                          Margin="20,0,0,0"
+                          Width="250"
+                          ItemsSource="{Binding Mode=OneWay}"
+                          DisplayMemberPath="DisplayName">
+                    <!--<ComboBoxItem Content="Draw entire Site Structure" IsSelected="True" />-->
+                </ComboBox>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Grid.Row="2" Header="Site Links:"
+                  IsEnabled="{Binding ElementName=chkDrawSites,Path=IsChecked,Mode=OneWay}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <CheckBox Name="chkIPSiteLink" VerticalAlignment="Center" 
+                          Margin="20,0,0,0"
+                          IsChecked="{Binding Path=Default.Sit_IPSiteLinkState, UpdateSourceTrigger=Explicit}">IP Site Links</CheckBox>
+                <CheckBox Grid.Column="1" Name ="chkSMTPSiteLink" 
+                          VerticalAlignment="Center" 
+                          IsChecked="{Binding Path=Default.Sit_SMTPSiteLinkState, UpdateSourceTrigger=Explicit}">SMTP Site Links</CheckBox>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="3" Header="Replication Connections:" 
+                  IsEnabled="{Binding ElementName=chkDrawSites,Path=IsChecked,Mode=OneWay}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox Grid.Column="0" Name="chkIntraReplCon" 
+                              Content="Intra Site Connections" 
+                              VerticalAlignment="Center" Margin="20,0,0,0" 
+                              IsChecked="{Binding Path=Default.Sit_IntraReplConState, UpdateSourceTrigger=Explicit}"/>
+                    <CheckBox Grid.Column="1" Name="chkInterReplCon" 
+                              Content="Inter Site Connections" 
+                              VerticalAlignment="Center" 
+                              IsChecked="{Binding Path=Default.Sit_InterReplConState, UpdateSourceTrigger=Explicit}"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox Grid.Column="0" Name="chkDetailedReplCon" 
+                              Content="Detailed Replication Connections" 
+                              VerticalAlignment="Center" Margin="20,0,0,0" 
+                              IsChecked="{Binding Path=Default.Sit_DetailedConnectionsState, UpdateSourceTrigger=Explicit}"/>
+                    <CheckBox Grid.Column="1" Name="chkSuppressEmptySites" 
+                              Content="Aggregate empty Sites" 
+                              VerticalAlignment="Center" 
+                              IsChecked="{Binding Path=Default.Sit_SuppresEmptyState, UpdateSourceTrigger=Explicit}"/>
+                </Grid>
+            </Grid>
+        </GroupBox>
+        <Grid Grid.Row="4" IsEnabled="{Binding ElementName=chkDrawSites,Path=IsChecked,Mode=OneWay}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="Subnets:" Margin="0,0,10,0">
+                <CheckBox Name="chkSubnets" Content="Include Subnets" 
+                          VerticalAlignment="Center" Margin="20,0,0,0" 
+                          IsChecked="{Binding Path=Default.Sit_DrawSubnetsState, UpdateSourceTrigger=Explicit}"/>
+            </GroupBox>
+            <GroupBox Grid.Column="1" Header="Site Links containing >= 2 Sites:" Margin="0,0,10,0" Name="grpMoreThan2">
+                <CheckBox Name="chkComplexSiteLinks" 
+                          Content="Draw all possible connections" 
+                          VerticalAlignment="Center" Margin="20,0,0,0" 
+                          IsChecked="{Binding Path=Default.Sit_ComplexSiteLinksState, UpdateSourceTrigger=Explicit}"/>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</UserControl>

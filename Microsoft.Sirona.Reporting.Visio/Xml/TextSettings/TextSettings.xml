@@ -1,0 +1,365 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://schemas.microsoft.com/sirona/visio/textsettings">
+  <Style Name="Normal">
+    <Paragraph>
+      <Cell Name="IndFirst" Value="0"/>
+      <Cell Name="IndLeft" Value="0"/>
+      <Cell Name="IndRight" Value="0"/>
+      <Cell Name="SpLine" Value="-1.2"/>
+      <Cell Name="SpBefore" Value="0"/>
+      <Cell Name="SpAfter" Value="0"/>
+      <Cell Name="HorzAlign" Value="0"/>
+      <Cell Name="Bullet" Value="0"/>
+      <Cell Name="BulletStr" Value=""/>
+      <Cell Name="BulletFont" Value="0"/>
+      <Cell Name="BulletFontSize" Value="-1"/>
+      <Cell Name="TextPosAfterBullet" Value="4"/>
+      <Cell Name="Flags" Value="0"/>
+    </Paragraph>
+    <Character>
+      <Cell Name="Font" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Color" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Style" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Case" Value="0"/>
+      <Cell Name="Pos" Value="0"/>
+      <Cell Name="FontScale" Value="1"/>
+      <!--Size in Inch - PT/72-->
+      <Cell Name="Size" Value="0.1388888888888889" Unit="PT"/>
+      <Cell Name="DblUnderline" Value="0"/>
+      <Cell Name="Overline" Value="0"/>
+      <Cell Name="Strikethru" Value="0"/>
+      <Cell Name="DoubleStrikethrough" Value="0"/>
+      <Cell Name="Letterspace" Value="0"/>
+      <Cell Name="ColorTrans" Value="0"/>
+      <Cell Name="AsianFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptSize" Value="-1"/>
+      <Cell Name="LangID" Value="en-US"/>
+    </Character>
+  </Style>
+  <Style Name="Title">
+    <Paragraph>
+      <Cell Name="IndFirst" Value="0"/>
+      <Cell Name="IndLeft" Value="0"/>
+      <Cell Name="IndRight" Value="0"/>
+      <Cell Name="SpLine" Value="-1.2"/>
+      <Cell Name="SpBefore" Value="0"/>
+      <Cell Name="SpAfter" Value="0.2"/>
+      <Cell Name="HorzAlign" Value="1"/>
+      <Cell Name="Bullet" Value="0"/>
+      <Cell Name="BulletStr" Value=""/>
+      <Cell Name="BulletFont" Value="0"/>
+      <Cell Name="BulletFontSize" Value="-1"/>
+      <Cell Name="TextPosAfterBullet" Value="4"/>
+      <Cell Name="Flags" Value="0"/>
+    </Paragraph>
+    <Character>
+      <Cell Name="Font" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Color" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Case" Value="1"/>
+      <Cell Name="Pos" Value="0"/>
+      <Cell Name="Size" Value="0.2222222222222222" Unit="PT"/>
+      <Cell Name="Style" Value="21"/>
+      <Cell Name="FontScale" Value="1"/>
+      <Cell Name="DblUnderline" Value="0"/>
+      <Cell Name="Overline" Value="0"/>
+      <Cell Name="Strikethru" Value="0"/>
+      <Cell Name="DoubleStrikethrough" Value="0"/>
+      <Cell Name="Letterspace" Value="0"/>
+      <Cell Name="ColorTrans" Value="0"/>
+      <Cell Name="AsianFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptSize" Value="-1"/>
+      <Cell Name="LangID" Value="en-US"/>
+    </Character>
+  </Style>
+  <Style Name="Header1">
+    <Paragraph>
+      <Cell Name="IndFirst" Value="0"/>
+      <Cell Name="IndLeft" Value="0"/>
+      <Cell Name="IndRight" Value="0"/>
+      <Cell Name="SpLine" Value="-1.2"/>
+      <Cell Name="SpBefore" Value="0"/>
+      <Cell Name="HorzAlign" Value="0"/>
+      <Cell Name="SpAfter" Value="0.1"/>
+      <Cell Name="Bullet" Value="0"/>
+      <Cell Name="BulletStr" Value=""/>
+      <Cell Name="BulletFont" Value="0"/>
+      <Cell Name="BulletFontSize" Value="-1"/>
+      <Cell Name="TextPosAfterBullet" Value="4"/>
+      <Cell Name="Flags" Value="0"/>
+    </Paragraph>
+    <Character>
+      <Cell Name="Font" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Color" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Case" Value="0"/>
+      <Cell Name="Pos" Value="0"/>
+      <Cell Name="Size"  Value="0.1944444444444444" Unit="PT"/>
+      <Cell Name="Style" Value="17"/>
+      <Cell Name="FontScale" Value="1"/>
+      <Cell Name="DblUnderline" Value="0"/>
+      <Cell Name="Overline" Value="0"/>
+      <Cell Name="Strikethru" Value="0"/>
+      <Cell Name="DoubleStrikethrough" Value="0"/>
+      <Cell Name="Letterspace" Value="0"/>
+      <Cell Name="ColorTrans" Value="0"/>
+      <Cell Name="AsianFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptSize" Value="-1"/>
+      <Cell Name="LangID" Value="en-US"/>
+    </Character>
+  </Style>
+  <Style Name="Header2">
+    <Paragraph>
+      <Cell Name="IndFirst" Value="0"/>
+      <Cell Name="IndLeft" Value="0"/>
+      <Cell Name="IndRight" Value="0"/>
+      <Cell Name="SpLine" Value="-1.2"/>
+      <Cell Name="SpBefore" Value="0"/>
+      <Cell Name="SpAfter" Value="0"/>
+      <Cell Name="HorzAlign" Value="0"/>
+      <Cell Name="Bullet" Value="0"/>
+      <Cell Name="BulletStr" Value=""/>
+      <Cell Name="BulletFont" Value="0"/>
+      <Cell Name="BulletFontSize" Value="-1"/>
+      <Cell Name="TextPosAfterBullet" Value="4"/>
+      <Cell Name="Flags" Value="0"/>
+    </Paragraph>
+    <Character>
+      <Cell Name="Font" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Color" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Case" Value="0"/>
+      <Cell Name="Pos" Value="0"/>
+      <Cell Name="Size" Value="0.1666666666666667" Unit="PT"/>
+      <Cell Name="Style" Value="34"/>
+      <Cell Name="FontScale" Value="1"/>
+      <Cell Name="DblUnderline" Value="0"/>
+      <Cell Name="Overline" Value="0"/>
+      <Cell Name="Strikethru" Value="0"/>
+      <Cell Name="DoubleStrikethrough" Value="0"/>
+      <Cell Name="Letterspace" Value="0"/>
+      <Cell Name="ColorTrans" Value="0"/>
+      <Cell Name="AsianFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptSize" Value="-1"/>
+      <Cell Name="LangID" Value="en-US"/>
+    </Character>
+  </Style>
+  <Style Name="Bullet">
+    <Paragraph>
+      <Cell Name="IndFirst" Value="0"/>
+      <Cell Name="IndLeft" Value="0"/>
+      <Cell Name="IndRight" Value="0"/>
+      <Cell Name="SpLine" Value="-1.2"/>
+      <Cell Name="SpBefore" Value="0"/>
+      <Cell Name="SpAfter" Value="0"/>
+      <Cell Name="HorzAlign" Value="0"/>
+      <Cell Name="Bullet" Value="1"/>
+      <Cell Name="BulletStr" Value=""/>
+      <Cell Name="BulletFont" Value="0"/>
+      <Cell Name="BulletFontSize" Value="-1"/>
+      <Cell Name="TextPosAfterBullet" Value="0.1"/>
+      <Cell Name="Flags" Value="0"/>
+    </Paragraph>
+    <Character>
+      <Cell Name="Font" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Color" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Style" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Case" Value="0"/>
+      <Cell Name="Pos" Value="0"/>
+      <Cell Name="FontScale" Value="1"/>
+      <Cell Name="Size" Value="0.1388888888888889" Unit="PT"/>
+      <Cell Name="DblUnderline" Value="0"/>
+      <Cell Name="Overline" Value="0"/>
+      <Cell Name="Strikethru" Value="0"/>
+      <Cell Name="DoubleStrikethrough" Value="0"/>
+      <Cell Name="Letterspace" Value="0"/>
+      <Cell Name="ColorTrans" Value="0"/>
+      <Cell Name="AsianFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptSize" Value="-1"/>
+      <Cell Name="LangID" Value="en-US"/>
+    </Character>
+  </Style>
+  <Style Name="NormalItalic">
+    <Paragraph>
+      <Cell Name="IndFirst" Value="0"/>
+      <Cell Name="IndLeft" Value="0"/>
+      <Cell Name="IndRight" Value="0"/>
+      <Cell Name="SpLine" Value="-1.2"/>
+      <Cell Name="SpBefore" Value="0"/>
+      <Cell Name="SpAfter" Value="0"/>
+      <Cell Name="HorzAlign" Value="0"/>
+      <Cell Name="Bullet" Value="0"/>
+      <Cell Name="BulletStr" Value=""/>
+      <Cell Name="BulletFont" Value="0"/>
+      <Cell Name="BulletFontSize" Value="-1"/>
+      <Cell Name="TextPosAfterBullet" Value="4"/>
+      <Cell Name="Flags" Value="0"/>
+    </Paragraph>
+    <Character>
+      <Cell Name="Font" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Color" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Case" Value="0"/>
+      <Cell Name="Pos" Value="0"/>
+      <Cell Name="Style" Value="34"/>
+      <Cell Name="FontScale" Value="1"/>
+      <Cell Name="Size" Value="0.1388888888888889" Unit="PT"/>
+      <Cell Name="DblUnderline" Value="0"/>
+      <Cell Name="Overline" Value="0"/>
+      <Cell Name="Strikethru" Value="0"/>
+      <Cell Name="DoubleStrikethrough" Value="0"/>
+      <Cell Name="Letterspace" Value="0"/>
+      <Cell Name="ColorTrans" Value="0"/>
+      <Cell Name="AsianFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptSize" Value="-1"/>
+      <Cell Name="LangID" Value="en-US"/>
+    </Character>
+  </Style>
+  <Style Name="NormalBold">
+    <Paragraph>
+      <Cell Name="IndFirst" Value="0"/>
+      <Cell Name="IndLeft" Value="0"/>
+      <Cell Name="IndRight" Value="0"/>
+      <Cell Name="SpLine" Value="-1.2"/>
+      <Cell Name="SpBefore" Value="0"/>
+      <Cell Name="SpAfter" Value="0"/>
+      <Cell Name="HorzAlign" Value="0"/>
+      <Cell Name="Bullet" Value="0"/>
+      <Cell Name="BulletStr" Value=""/>
+      <Cell Name="BulletFont" Value="0"/>
+      <Cell Name="BulletFontSize" Value="-1"/>
+      <Cell Name="TextPosAfterBullet" Value="4"/>
+      <Cell Name="Flags" Value="0"/>
+    </Paragraph>
+    <Character>
+      <Cell Name="Font" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Color" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Case" Value="0"/>
+      <Cell Name="Pos" Value="0"/>
+      <Cell Name="Style" Value="17"/>
+      <Cell Name="FontScale" Value="1"/>
+      <Cell Name="Size" Value="0.1388888888888889" Unit="PT"/>
+      <Cell Name="DblUnderline" Value="0"/>
+      <Cell Name="Overline" Value="0"/>
+      <Cell Name="Strikethru" Value="0"/>
+      <Cell Name="DoubleStrikethrough" Value="0"/>
+      <Cell Name="Letterspace" Value="0"/>
+      <Cell Name="ColorTrans" Value="0"/>
+      <Cell Name="AsianFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptSize" Value="-1"/>
+      <Cell Name="LangID" Value="en-US"/>
+    </Character>
+  </Style>
+<Style Name="SmallNormal">
+    <Paragraph>
+      <Cell Name="IndFirst" Value="0"/>
+      <Cell Name="IndLeft" Value="0"/>
+      <Cell Name="IndRight" Value="0"/>
+      <Cell Name="SpLine" Value="-1.2"/>
+      <Cell Name="SpBefore" Value="0"/>
+      <Cell Name="SpAfter" Value="0"/>
+      <Cell Name="HorzAlign" Value="0"/>
+      <Cell Name="Bullet" Value="0"/>
+      <Cell Name="BulletStr" Value=""/>
+      <Cell Name="BulletFont" Value="0"/>
+      <Cell Name="BulletFontSize" Value="-1"/>
+      <Cell Name="TextPosAfterBullet" Value="4"/>
+      <Cell Name="Flags" Value="0"/>
+    </Paragraph>
+    <Character>
+      <Cell Name="Font" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Color" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Style" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Case" Value="0"/>
+      <Cell Name="Pos" Value="0"/>
+      <Cell Name="FontScale" Value="1"/>
+      <!--Size in Inch - PT/72-->
+      <Cell Name="Size" Value="0.08333333333333333" Unit="PT"/>
+      <Cell Name="DblUnderline" Value="0"/>
+      <Cell Name="Overline" Value="0"/>
+      <Cell Name="Strikethru" Value="0"/>
+      <Cell Name="DoubleStrikethrough" Value="0"/>
+      <Cell Name="Letterspace" Value="0"/>
+      <Cell Name="ColorTrans" Value="0"/>
+      <Cell Name="AsianFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptSize" Value="-1"/>
+      <Cell Name="LangID" Value="en-US"/>
+    </Character>
+  </Style>
+<Style Name="SmallNormalBold">
+    <Paragraph>
+      <Cell Name="IndFirst" Value="0"/>
+      <Cell Name="IndLeft" Value="0"/>
+      <Cell Name="IndRight" Value="0"/>
+      <Cell Name="SpLine" Value="-1.2"/>
+      <Cell Name="SpBefore" Value="0"/>
+      <Cell Name="SpAfter" Value="0"/>
+      <Cell Name="HorzAlign" Value="0"/>
+      <Cell Name="Bullet" Value="0"/>
+      <Cell Name="BulletStr" Value=""/>
+      <Cell Name="BulletFont" Value="0"/>
+      <Cell Name="BulletFontSize" Value="-1"/>
+      <Cell Name="TextPosAfterBullet" Value="4"/>
+      <Cell Name="Flags" Value="0"/>
+    </Paragraph>
+    <Character>
+      <Cell Name="Font" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Color" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Case" Value="0"/>
+      <Cell Name="Pos" Value="0"/>
+      <Cell Name="Style" Value="17"/>
+      <Cell Name="FontScale" Value="1"/>
+      <Cell Name="Size" Value="0.08333333333333333" Unit="PT"/>
+      <Cell Name="DblUnderline" Value="0"/>
+      <Cell Name="Overline" Value="0"/>
+      <Cell Name="Strikethru" Value="0"/>
+      <Cell Name="DoubleStrikethrough" Value="0"/>
+      <Cell Name="Letterspace" Value="0"/>
+      <Cell Name="ColorTrans" Value="0"/>
+      <Cell Name="AsianFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptSize" Value="-1"/>
+      <Cell Name="LangID" Value="en-US"/>
+    </Character>
+  </Style>
+<Style Name="SmallNormalItalic">
+    <Paragraph>
+      <Cell Name="IndFirst" Value="0"/>
+      <Cell Name="IndLeft" Value="0"/>
+      <Cell Name="IndRight" Value="0"/>
+      <Cell Name="SpLine" Value="-1.2"/>
+      <Cell Name="SpBefore" Value="0"/>
+      <Cell Name="SpAfter" Value="0"/>
+      <Cell Name="HorzAlign" Value="0"/>
+      <Cell Name="Bullet" Value="0"/>
+      <Cell Name="BulletStr" Value=""/>
+      <Cell Name="BulletFont" Value="0"/>
+      <Cell Name="BulletFontSize" Value="-1"/>
+      <Cell Name="TextPosAfterBullet" Value="4"/>
+      <Cell Name="Flags" Value="0"/>
+    </Paragraph>
+    <Character>
+      <Cell Name="Font" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Color" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="Case" Value="0"/>
+      <Cell Name="Pos" Value="0"/>
+      <Cell Name="Style" Value="34"/>
+      <Cell Name="FontScale" Value="1"/>
+      <Cell Name="Size" Value="0.08333333333333333" Unit="PT"/>
+      <Cell Name="DblUnderline" Value="0"/>
+      <Cell Name="Overline" Value="0"/>
+      <Cell Name="Strikethru" Value="0"/>
+      <Cell Name="DoubleStrikethrough" Value="0"/>
+      <Cell Name="Letterspace" Value="0"/>
+      <Cell Name="ColorTrans" Value="0"/>
+      <Cell Name="AsianFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptFont" Value="Themed" Formula="THEMEVAL()"/>
+      <Cell Name="ComplexScriptSize" Value="-1"/>
+      <Cell Name="LangID" Value="en-US"/>
+    </Character>
+  </Style>
+</root>

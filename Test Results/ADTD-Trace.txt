@@ -1,0 +1,51 @@
+21/9/2012 09:15:53 AMPROGRAM TRACE STARTED!
+21/9/2012 09:15:53 AM===========================
+21/9/2012 09:16:02 AMConnecting to: 
+21/9/2012 09:16:03 AMConnected!
+21/9/2012 09:16:05 AMDraw ...
+21/9/2012 09:16:05 AM********** SELECTIONS **********
+21/9/2012 09:16:05 AM	Windows2000Trust: True
+21/9/2012 09:16:05 AM	DownlevelTrusts: True
+21/9/2012 09:16:05 AM	CrossForestTrust: True
+21/9/2012 09:16:05 AM	DrawExternalDomainDetails: True
+21/9/2012 09:16:05 AM	DomainIncludeServers: True
+21/9/2012 09:16:05 AM
+21/9/2012 09:16:05 AM	IPSiteLink: True
+21/9/2012 09:16:05 AM	SMTPSiteLink: True
+21/9/2012 09:16:05 AM	IntraReplCon: True
+21/9/2012 09:16:05 AM	InterReplCon: True
+21/9/2012 09:16:05 AM	DetailedReplCon: False
+21/9/2012 09:16:05 AM	SuppressEmptySites: False
+21/9/2012 09:16:05 AM	Subnets: False
+21/9/2012 09:16:05 AM	ComplexSiteLinks: True
+21/9/2012 09:16:05 AM	SiteIncludeServers: True
+21/9/2012 09:16:05 AM
+21/9/2012 09:16:05 AM	ServerVersion: False
+21/9/2012 09:16:05 AM	DrawFQDN: False
+21/9/2012 09:16:05 AM	ColorCodeServers: True
+21/9/2012 09:16:05 AM*********************************
+21/9/2012 09:16:05 AMStart Site Diagram Worker...
+21/9/2012 09:16:05 AMStart Domain Diagram Worker...
+21/9/2012 09:16:05 AM***Progress reported: Domain Diagram - Read Data from output...
+21/9/2012 09:16:05 AM***Progress reported: Site Diagram - Read Data from output...
+21/9/2012 09:16:08 AM	Reading template Resources\Template.vtx
+21/9/2012 09:16:08 AM***Progress reported: Domain Diagram - Creating Document...
+21/9/2012 09:16:08 AM	Reading stencil Resources\Template.vtx
+21/9/2012 09:16:11 AM	Reading template Resources\Template.vtx
+21/9/2012 09:16:11 AM	Reading stencil Resources\Stencil.vsx
+21/9/2012 09:16:11 AM***Progress reported: Site Diagram - Creating Document...
+21/9/2012 09:16:11 AM	3 Domain Objects.
+21/9/2012 09:16:11 AM	6 Server Objects.
+21/9/2012 09:16:11 AM***Progress reported: Domain Diagram - Adding Nodes...
+21/9/2012 09:16:14 AM	4 Site Objects.
+21/9/2012 09:16:14 AM	6 Server Objects.
+21/9/2012 09:16:14 AM
+Domain List created: 3 domains.
+21/9/2012 09:16:14 AM***Progress reported: Site Diagram - Adding Nodes...
+21/9/2012 09:16:15 AM***Progress reported: Domain Diagram - Adding connections...
+21/9/2012 09:16:15 AM***Progress reported: Site Diagram - Adding connections...
+21/9/2012 09:16:15 AMDocument saved as C:\Users\administrator\Documents\AD Domains.vdx
+21/9/2012 09:16:15 AM********** EXCEPTION The given key was not present in the dictionary. *************
+21/9/2012 09:16:18 AMSettings saved!
+21/9/2012 09:16:18 AMPROGRAM END!
+21/9/2012 09:16:18 AM===========================

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root Title="Vrste Dijagrama" Server="">
+  <configuration>
+    <row Name="DebugIsOn" Title="Debug" Value="true" Type="Boolean" ToolTip="Uključite ili isključite bilježenje pogrešaka"/>
+    <row Name="DebugPath" Title="Lokacija dnevnika pogrešaka" Value="%DOCUMENTS%" Type="String" Picker="True" ToolTip="Lokacija dnevnika pogrešaka" PickerFilter=""/>
+    <row Name="TraceIsOn" Title="Trace" Value="true" Type="Boolean" ToolTip="Turn Trace logging on or off" />
+    <row Name="TracePath" Title="Trace Log location" Value="%DOCUMENTS%" Type="String" Picker="True" ToolTip="Trace log location" PickerFilter=""/>
+  </configuration>
+  <item Name="SiteDataReader" Label="Crtanje replikacijske topologije" ToolTip="Nacrtajte dijagram topologije aktivnog direktorija sa Site-ovima, vezama na Site-ove, poslužiteljima i objektima veze" Dll="Mihelcic.Net.Visio.SiteDataReader.dll">
+    <Parameter Name="SiteDiagramFile" Key="VisioFileName" Title="Izlaz dijagrama" Value="%DOCUMENTS%\AD Sites.vsdx" Type="String" ToolTip="Odaberite mjesto datoteke izlaznog dijagrama" Picker="True" PickerFilter="Visio Drawings (*.vsdx)|*.vsdx" />
+    <Parameter Name="SiteReadServers" Key="ReadServers" Title="Prikupite podatke poslužitelja" Value="True" Type="Boolean" ToolTip="Prikaži informacija o poslužitelju na dijagramu"/>
+    <Parameter Name="AgregateSites" Key="AgregateSites" Title="Objedini prazne Site-ove" Value="False" Type="Boolean" ToolTip="Objedini sve prazne Site-ove"/>
+    <Parameter Name="ExpandSL" Key="ExpandSL" Title="Expand Site Links" Value="False" Type="Boolean" ToolTip="Iscrtajte sve moguće veze ako SiteLink povezuje više Site-ova"/>
+    <Parameter Name="ExportSiteXML" Key="ExportXML" Title="Izvoz u Xml" Value="False" Type="Boolean" ToolTip="Izvoz prikupljenih podataka u XML"/>
+    <Parameter Name="ExportSiteCSV" Key="ExportCSV" Title="Izvoz u CSV" Value="False" Type="Boolean" ToolTip="Izvoz prikupljenih podataka u CSV"/>
+  </item>
+  <item Name="DomainDataReader" Label="Crtanje Domena" ToolTip="Nacrtajte dijagram domene Active Directory uključujući povjerenja i pouzdana područja" Dll="Mihelcic.Net.Visio.DomainDataReader.dll">
+    <Parameter Name="DomainDiagramFile" Key="VisioFileName" Title="Izlaz dijagrama" Value="%DOCUMENTS%\AD Domains.vsdx" Type="String" ToolTip="Odaberite mjesto datoteke izlaznog dijagrama" Picker="True" PickerFilter="Visio Drawings (*.vsdx)|*.vsdx" />
+    <Parameter Name="DomainReadServers" Key="ReadServers" Title="Prikupite podatke poslužitelja" Value="True" Type="Boolean" ToolTip="Prikaži informacija o poslužitelju na dijagramu"/>
+    <Parameter Name="ExportDomXML" Key="ExportXML" Title="Izvoz u Xml" Value="False" Type="Boolean" ToolTip="Izvoz prikupljenih podataka u XML"/>
+    <Parameter Name="ExportDomCSV" Key="ExportCSV" Title="Izvoz u CSV" Value="False" Type="Boolean" ToolTip="Izvoz prikupljenih podataka u CSV"/>
+  </item>
+</root>

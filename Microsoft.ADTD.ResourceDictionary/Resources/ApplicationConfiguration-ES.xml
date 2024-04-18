@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root Title="Tipos de Diagrama" Server="">
+  <configuration>
+    <row Name="DebugIsOn" Title="Depuración" Value="true" Type="Boolean" ToolTip="Activar o desactivar el registro de depuración"/>
+    <row Name="DebugPath" Title="Ubicación del registro de depuración" Value="%DOCUMENTS%" Type="String" Picker="True" ToolTip="Ubicación del registro de depuración" PickerFilter=""/>
+    <row Name="TraceIsOn" Title="Seguimiento" Value="true" Type="Boolean" ToolTip="Activar o desactivar el registro de seguimiento" />
+    <row Name="TracePath" Title="Ubicación del registro de seguimiento" Value="%DOCUMENTS%" Type="String" Picker="True" ToolTip="Ubicación del registro de seguimiento" PickerFilter=""/>
+  </configuration>
+  <item Name="SiteDataReader" Label="Dibujar la Topología de Replicación" ToolTip="Dibujar un diagrama de topología de Active Directory con sitios, vínculos de sitio, servidores y objetos de conexión" Dll="Mihelcic.Net.Visio.SiteDataReader.dll">
+    <Parameter Name="SiteDiagramFile" Key="VisioFileName" Title="Salida del diagrama" Value="%DOCUMENTS%\AD Sites.vsdx" Type="String" ToolTip="Seleccione la ubicación del archivo de diagrama de salida" Picker="True" PickerFilter="Visio Drawings (*.vsdx)|*.vsdx" />
+    <Parameter Name="SiteReadServers" Key="ReadServers" Title="Recopilar datos del servidor" Value="True" Type="Boolean" ToolTip="Mostrar información de servidor en el diagrama"/>
+    <Parameter Name="AgregateSites" Key="AgregateSites" Title="Agregar sitios vacíos" Value="False" Type="Boolean" ToolTip="Agregar todos los sitios vacíos"/>
+    <Parameter Name="ExpandSL" Key="ExpandSL" Title="Expandir los vínculos de sitios" Value="False" Type="Boolean" ToolTip="Dibujar todas las conexiones posibles si el vínculo de sitio conecta  múltiples sitios"/>
+    <Parameter Name="ExportSiteXML" Key="ExportXML" Title="Exportar a XML" Value="False" Type="Boolean" ToolTip="Exportar los datos recopilados a XML"/>
+    <Parameter Name="ExportSiteCSV" Key="ExportCSV" Title="Exportar a CSV" Value="False" Type="Boolean" ToolTip="Exportar los datos recopilados a CSV"/>
+  </item>
+  <item Name="DomainDataReader" Label="Draw Domains" ToolTip="Draw Active Directory Domain Diagram including Trusts and trusted realms" Dll="Mihelcic.Net.Visio.DomainDataReader.dll">
+    <Parameter Name="DomainDiagramFile" Key="VisioFileName" Title="Salida del diagrama" Value="%DOCUMENTS%\AD Domains.vsdx" Type="String" ToolTip="Seleccione la ubicación del archivo de diagrama de salida" Picker="True" PickerFilter="Visio Drawings (*.vsdx)|*.vsdx" />
+    <Parameter Name="DomainReadServers" Key="ReadServers" Title="Recopilar datos del servidor" Value="True" Type="Boolean" ToolTip="Mostrar información de servidor en el diagrama"/>
+    <Parameter Name="ExportDomXML" Key="ExportXML" Title="Exportar a XML" Value="False" Type="Boolean" ToolTip="Exportar los datos recopilados a XML"/>
+    <Parameter Name="ExportDomCSV" Key="ExportCSV" Title="Exportar a CSV" Value="False" Type="Boolean" ToolTip="Exportar los datos recopilados a CSV"/>
+  </item>
+</root>

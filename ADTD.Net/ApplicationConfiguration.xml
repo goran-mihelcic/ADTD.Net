@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root Title="Diagram Types" Server="">
+  <configuration>
+    <row Name="DebugIsOn" Title="Debug" Value="true" Type="Boolean" ToolTip="Turn Debug logging on or off"/>
+    <row Name="DebugPath" Title="Debug Log location" Value="%DOCUMENTS%" Type="String" Picker="True" ToolTip="Debug log location" PickerFilter=""/>
+    <row Name="TraceIsOn" Title="Trace" Value="true" Type="Boolean" ToolTip="Turn Trace logging on or off" />
+    <row Name="TracePath" Title="Trace Log location" Value="%DOCUMENTS%" Type="String" Picker="True" ToolTip="Trace log location" PickerFilter=""/>
+  </configuration>
+  <item Name="SiteDataReader" Label="Draw Replication Topology" ToolTip="Draw Active Directory Topology Diagram with Sites, SiteLinks, servers and connection objects" Dll="SiteDataReader.dll">
+    <Parameter Name="SiteDiagramFile" Key="VisioFileName" Title="Diagram output" Value="%DOCUMENTS%\AD Sites.vsdx" Type="String" ToolTip="Select location of output diagram file" Picker="True" PickerFilter="Visio Drawings (*.vsdx)|*.vsdx" />
+    <Parameter Name="SiteReadServers" Key="ReadServers" Title="Collect Server Data" Value="True" Type="Boolean" ToolTip="Display server information on the diagram"/>
+    <Parameter Name="AgregateSites" Key="AgregateSites" Title="Agregate empty sites" Value="False" Type="Boolean" ToolTip="Aggregate all empty sites"/>
+    <Parameter Name="ExpandSL" Key="ExpandSL" Title="Expand Site Links" Value="False" Type="Boolean" ToolTip="Draw all possible connections if SiteLink connects multiple Sites"/>
+    <Parameter Name="ExportSiteXML" Key="ExportXML" Title="Export to Xml" Value="False" Type="Boolean" ToolTip="Export collected Data to XML"/>
+    <Parameter Name="ExportSiteCSV" Key="ExportCSV" Title="Export to CSV" Value="False" Type="Boolean" ToolTip="Export collected Data to CSV"/>
+  </item>
+  <item Name="DomainDataReader" Label="Draw Domains" ToolTip="Draw Active Directory Domain Diagram including Trusts and trusted realms" Dll="DomainDataReader.dll">
+    <Parameter Name="DomainDiagramFile" Key="VisioFileName" Title="Diagram output" Value="%DOCUMENTS%\AD Domains.vsdx" Type="String" ToolTip="Select location of output diagram file" Picker="True" PickerFilter="Visio Drawings (*.vsdx)|*.vsdx" />
+    <Parameter Name="DomainReadServers" Key="ReadServers" Title="Collect Server Data" Value="True" Type="Boolean" ToolTip="Display server information on the diagram"/>
+    <Parameter Name="ExportDomXML" Key="ExportXML" Title="Export to Xml" Value="False" Type="Boolean" ToolTip="Export collected Data to XML"/>
+    <Parameter Name="ExportDomCSV" Key="ExportCSV" Title="Export to CSV" Value="False" Type="Boolean" ToolTip="Export collected Data to CSV"/>
+  </item>
+</root>

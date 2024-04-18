@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Mihelcic.Net.Visio.Diagrammer.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DomainDrawingFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">%DOCUMENTS%\AD Domains.vdx</Value>
+    </Setting>
+    <Setting Name="SiteDrawingFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">%DOCUMENTS%\AD Sites.vdx</Value>
+    </Setting>
+    <Setting Name="LogFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">%DOCUMENTS%\ADTD.log</Value>
+    </Setting>
+    <Setting Name="ExportFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">%DOCUMENTS%\ADTD-Trace.txt</Value>
+    </Setting>
+    <Setting Name="VerboseTrace" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

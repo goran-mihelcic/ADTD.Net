@@ -1,0 +1,62 @@
+﻿<Window x:Class="Microsoft.ADTD.ADDiagram.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AD Diagram - ADRAP" Height="350" Width="525" ResizeMode="NoResize" Closing="Window_Closing">
+    <Window.Resources>
+        <XmlNamespaceMappingCollection x:Key="mapping">
+            <XmlNamespaceMapping Uri="http://www.microsoft.com/Rapid" Prefix="mf" />
+        </XmlNamespaceMappingCollection>
+
+        <XmlDataProvider x:Key="engagementData" 
+                         XPath="/mf:RapidEngagement/mf:Keys[position()=last()]" 
+                         IsAsynchronous="False"
+                         XmlNamespaceManager="{StaticResource mapping}"></XmlDataProvider>
+
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="28"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="Select Diagrams:" FontSize="16" VerticalAlignment="Bottom" Margin="5,0,0,0" />
+            <CheckBox Grid.Row="1" Name="cbDomainDiagram" Content="Create Domain Diagram" VerticalAlignment="Bottom" Margin="45,0,0,0" />
+            <CheckBox Grid.Row="2" Name="cbSiteDiagram" Content="Create Site Diagram" VerticalAlignment="Bottom" Margin="45,0,0,0" />
+            <Label Grid.Row="3" Content="ADRAP Output Folder:" VerticalAlignment="Bottom" Margin="5,0,0,0" />
+            <StackPanel Grid.Row="4" Orientation="Horizontal">
+                <TextBox Name="tbOutput" 
+                         Text="{Binding fName, Mode=TwoWay}"
+                         Width="474" 
+                         VerticalAlignment="Center" 
+                         Margin="5,0,0,0" 
+                         IsEnabled="True" />
+                <Button Name="btSelectOutput" Content="..." VerticalAlignment="Center" Margin="5,0,0,0" Click="btSelectOutput_Click" />
+            </StackPanel>
+            <Label Grid.Row="5" 
+                   Name="lblCustomer" 
+                   VerticalAlignment="Center" 
+                    DataContext="{StaticResource engagementData}"
+                   Content="{Binding XPath=@CustomerSiteName}"
+                   Margin="5,0,0,0" />
+           
+        </Grid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" FlowDirection="RightToLeft">
+            <Button Content="Create" Height="23" HorizontalAlignment="Right" Name="btnCreate" VerticalAlignment="Top" Width="75" Margin="5,0,0,5" Click="btnCreate_Click" />
+            <Button Content="Exit" Height="23" HorizontalAlignment="Right" Name="btnExit" VerticalAlignment="Top" Width="75" Margin="5,0,0,5" IsCancel="True" Click="btnExit_Click" />
+        </StackPanel>
+        <StatusBar Grid.Row="2">
+            <StatusBarItem Name="sbiCopyRight"  Content="(c) Microsoft, 2012" Focusable="False" HorizontalAlignment="Left" />
+            <Separator/>
+            <StatusBarItem Name="sbiInfo"  Content="" Focusable="False" HorizontalAlignment="Stretch" />
+        </StatusBar>
+    </Grid>
+</Window>

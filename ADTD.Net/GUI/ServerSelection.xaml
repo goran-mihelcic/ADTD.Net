@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="Mihelcic.Net.Visio.Diagrammer.ServerSelection"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prop="clr-namespace:Mihelcic.Net.Visio.Diagrammer.Properties"
+             xmlns:res="clr-namespace:Mihelcic.Net.Visio;assembly=Mihelcic.Net.Visio.ResourceDictionary"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="500" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="115"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <CheckBox Grid.Row="0" Grid.Column="0" 
+                      Name="chkDrawDCs" Content="{x:Static res:Strings.DrawServers}" 
+                      VerticalAlignment="Center" Margin="20,0,0,0" 
+                      IsChecked="{Binding Path=Default.Srv_DrawDCsState, UpdateSourceTrigger=Explicit}"/>
+        </Grid>
+        <GroupBox Grid.Row="1" Header="{x:Static res:Strings.DrawServers}" IsEnabled="{Binding ElementName=chkDrawDCs,Path=IsChecked,Mode=OneWay}">
+            <StackPanel>
+                <CheckBox Name="chkServerVersion" Content="{x:Static res:Strings.IncludeServerVersion}" 
+                          VerticalAlignment="Center" Margin="15,10,0,0" 
+                          ToolTip="{x:Static res:Strings.IncludeServerVersionToolTip}" 
+                          IsChecked="{Binding Path=Default.Srv_ServerVersionState, UpdateSourceTrigger=Explicit}"/>
+                <CheckBox Name="chkDrawFQDN" Content="{x:Static res:Strings.DrawFQDNServerNames}" 
+                          VerticalAlignment="Center" Margin="15,10,0,0" 
+                          ToolTip="{x:Static res:Strings.DrawFQDNServerNamesToolTip}" 
+                          IsChecked="{Binding Path=Default.Srv_DrawFQDNState, UpdateSourceTrigger=Explicit}"/>
+                <CheckBox Name="chkColorCodeServers" Content="{x:Static res:Strings.ColorcodeServers}" 
+                          VerticalAlignment="Center" Margin="15,10,0,0" 
+                          ToolTip="{x:Static res:Strings.ColorcodeServersToolTip}" 
+                          IsChecked="{Binding Path=Default.Srv_ColorCodeServersState, UpdateSourceTrigger=Explicit}"/>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>

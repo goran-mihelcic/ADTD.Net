@@ -1,0 +1,117 @@
+﻿<Window x:Class="Mihelcic.Net.Visio.Diagrammer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="clr-namespace:Mihelcic.Net.Visio.Diagrammer"
+        xmlns:prop="clr-namespace:Mihelcic.Net.Visio.Diagrammer.Properties"
+        xmlns:res="clr-namespace:Mihelcic.Net.Visio;assembly=Mihelcic.Net.Visio.ResourceDictionary"
+        Title="{x:Static res:Strings.MainWindowTitle}" 
+        Height="607" Width="749" 
+        Style="{DynamicResource WindowStyle}" 
+        Loaded="Window_Loaded" Closed="Window_Closed" Closing="Window_Closing">
+    <Window.Resources>
+        <prop:Settings x:Key="myDataSource"/>
+    </Window.Resources>
+    <Window.BindingGroup>
+        <BindingGroup Name="myBindingGroup" />
+    </Window.BindingGroup>
+    <Window.DataContext>
+        <Binding Source="{StaticResource myDataSource}" BindingGroupName="myBindingGroup"/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="23"/>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="23"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" Height="23" HorizontalAlignment="Stretch" Name="menu1" HorizontalContentAlignment="Left" Background="{StaticResource MenuGradient}" >
+            <MenuItem Name="mnuFile" Header="{x:Static res:Strings.FileMnu}">
+                <MenuItem Name="mnuFileExit" Header="{x:Static res:Strings.ExitMnu}" Click="mnuFileExit_Click"/>
+            </MenuItem>
+            <MenuItem Name="mnuTools" Header="{x:Static res:Strings.ToolsMnu}">
+                <MenuItem Name="mnuLanguageOptions" Header="{x:Static res:Strings.LanguageMnu}" >
+                    <MenuItem Name="EnglishMnu" Header="English" Click="mnuLanguageOptions_Click" >
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/Mihelcic.Net.Visio.ResourceDictionary;component/Resources/gb.ico" Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Name="CroatiaMnu" Header="Hrvatski" Click="mnuLanguageOptions_Click" >
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/Mihelcic.Net.Visio.ResourceDictionary;component/Resources/hr.ico" Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Name="SpainMnu" Header="Español" Click="mnuLanguageOptions_Click" >
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/Mihelcic.Net.Visio.ResourceDictionary;component/Resources/es.ico" Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Name="mnuToolsOptions" Header="{x:Static res:Strings.Options}" Click="mnuToolsOptions_Click" />
+            </MenuItem>
+            <MenuItem Name="mnuHelp" Header="{x:Static res:Strings.HelpMnu}">
+                <MenuItem Name="mnuHelpContents" Header="{x:Static res:Strings.ContentsMnu}" />
+                <Separator/>
+                <MenuItem Name="mnuHelpAbout" Header="{x:Static res:Strings.AboutMnu}" Click="mnuHelpAbout_Click" />
+            </MenuItem>
+        </Menu>
+        <GroupBox Grid.Row="1" Header="{x:Static res:Strings.DataSource}" Margin="5,20,5,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition  Width="120" />
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="128"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Content="{x:Static res:Strings.ServerLabel}" Margin="40,0,0,0" VerticalAlignment="Center" />
+                <TextBox Grid.Column="1" 
+                          Name="SelServerName" 
+                          Margin="10,7,0,6.52" 
+                          HorizontalAlignment="Stretch" 
+                          Height="25" Width="458"
+                          Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Configuration.Server, Mode=TwoWay}"
+                          ToolTip="{x:Static res:Strings.ServerToolTip}" />
+                <Label Grid.Row="1" Grid.Column="0"  Content="{x:Static res:Strings.ForestLabel}" Margin="40,0,0,0" VerticalAlignment="Center" />
+                <TextBox Grid.Row="1" Grid.Column="1"
+                          Name="SelForest" 
+                          Margin="10,7,0,6.52" 
+                          HorizontalAlignment="Stretch" 
+                          Height="25" Width="458"
+                          Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Configuration.DnsForestName, Mode=TwoWay}"
+                          ToolTip="{x:Static res:Strings.ForestToolTip}" />
+                <Button Grid.Column="2" Grid.Row="0" x:Name="logonBtn" Content="{x:Static res:Strings.LogOnBtn}" Width="80" Height="30" Click="logonBtn_Click" />
+                <Button Grid.Column="2" Grid.Row="1" x:Name="validateBtn" Content="{x:Static res:Strings.ValidateBtn}" Width="80" Height="30" Click="validateBtn_Click" />
+            </Grid>
+        </GroupBox>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="140" />
+            </Grid.ColumnDefinitions>
+            <TabControl Grid.Column="0" Margin="20,20,0,20" Background="Lavender">
+                <TabItem Name="_tabsettings_TabPage0" Header="{x:Static res:Strings.Selection}" >
+                    <my:Selection x:Name="mySelection"/>
+                </TabItem>
+                <TabItem Name="_tabsettings_TabPage1" Header="{x:Static res:Strings.Options}" IsEnabled="True">
+                    <my:SelectionProperties x:Name="myProperties" />
+                </TabItem>
+            </TabControl>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+                <Button Grid.Row="2" Name="btnDraw" Content="{x:Static res:Strings.DrawBtn}" Width="80" Height="30" Click="btnDraw_Click" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Configuration.Validated}" />
+                <Button Grid.Row="3" Name="btnExit" Content="{x:Static res:Strings.CloseBtn}" Width="80" Height="30" Margin="0,0,0,20" Click="btnExit_Click" />
+            </Grid>
+
+        </Grid>
+        <StatusBar Grid.Row="3" Name="StatusBar"  Background="{StaticResource StatusGradient}">
+            <StatusBarItem Name="sbItem1" Content="{x:Static res:Strings.InitialStatus}" />
+        </StatusBar>
+    </Grid>
+</Window>

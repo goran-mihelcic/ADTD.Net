@@ -1,0 +1,111 @@
+﻿<UserControl x:Class="Microsoft.ADTD.Net.ExchangeSelection"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prop="clr-namespace:Microsoft.ADTD.Net.Properties"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition  Height="80"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <CheckBox Grid.Row="0" Grid.Column="0" 
+                      Name="chkDrawExchange" 
+                      Content="Draw Exchange Organization" 
+                      VerticalAlignment="Center" Margin="20,0,0,0" 
+                      IsChecked="{Binding Path=Default.Exc_DrawExchangeState, UpdateSourceTrigger=Explicit}"/>
+            <CheckBox Grid.Row="0" Grid.Column="1" Name="chkUpdateExchangeDrawing" 
+                      Content="Update existing Visio Drawing" VerticalAlignment="Center" 
+                      IsEnabled="{Binding ElementName=chkDrawExchange,Path=IsChecked,Mode=OneWay}"/>
+        </Grid>
+        <GroupBox Grid.Row="1" Header="Replication Connections:" 
+                  IsEnabled="{Binding ElementName=chkDrawExchange,Path=IsChecked,Mode=OneWay}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox Grid.Column="0" 
+                              Name="chkRoutingGroup" Content="Routing Group" 
+                              VerticalAlignment="Center" Margin="20,0,0,0" 
+                              IsChecked="{Binding Path=Default.Exc_RoutingGroupState, UpdateSourceTrigger=Explicit}"/>
+                    <CheckBox Grid.Column="1" Name="chkExSMTP" 
+                              Content="SMTP" VerticalAlignment="Center" 
+                              IsChecked="{Binding Path=Default.Exc_SMTPState, UpdateSourceTrigger=Explicit}"/>
+                    <CheckBox Grid.Column="2" Name="chkExX400" 
+                              Content="X.400" VerticalAlignment="Center" 
+                              IsChecked="{Binding Path=Default.Exc_X400State, UpdateSourceTrigger=Explicit}"/>
+                    <CheckBox Grid.Column="3" Name="chkExOther" 
+                              Content="Other" VerticalAlignment="Center" 
+                              IsChecked="{Binding Path=Default.Exc_OtherState, UpdateSourceTrigger=Explicit}"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox Grid.Column="0" Name="chkExMSMail" 
+                              Content="Microsoft Mail" 
+                              VerticalAlignment="Center" Margin="20,0,0,0" 
+                              IsChecked="{Binding Path=Default.Exc_MSMailState, UpdateSourceTrigger=Explicit}"/>
+                    <CheckBox Grid.Column="1" Name="chkExCCMail" 
+                              Content="cc:Mail" VerticalAlignment="Center" 
+                              IsChecked="{Binding Path=Default.Exc_CCMailState, UpdateSourceTrigger=Explicit}"/>
+                    <CheckBox Grid.Column="2" Name="chkExNotes" 
+                              Content="Notes" VerticalAlignment="Center" 
+                              IsChecked="{Binding Path=Default.Exc_NotesState, UpdateSourceTrigger=Explicit}"/>
+                </Grid>
+            </Grid>
+        </GroupBox>
+        <Grid Grid.Row="2" IsEnabled="{Binding ElementName=chkDrawExchange,Path=IsChecked,Mode=OneWay}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="Replication Connectors:" Margin="0,0,10,0">
+                <CheckBox Name="chkExSiteRepl" 
+                          Content="Ex5.5 Site to Ex5.5 Site" 
+                          VerticalAlignment="Center" Margin="20,0,0,0" 
+                          IsChecked="{Binding Path=Default.Exc_SiteReplState, UpdateSourceTrigger=Explicit}"/>
+            </GroupBox>
+            <GroupBox Grid.Column="1" Header="SMTP Connectors:" Margin="0,0,10,0">
+                <CheckBox Name="chkdetailedSMTP" Content="Detailed SMTP Connections" VerticalAlignment="Center" Margin="20,0,0,0" />
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Row="3" IsEnabled="{Binding ElementName=chkDrawExchange,Path=IsChecked,Mode=OneWay}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="Mailboxes:" Margin="0,0,10,0">
+                <CheckBox Name="chkCountMailboxes" Content="Count Mailboxes per Server" VerticalAlignment="Center" Margin="20,0,0,0" />
+            </GroupBox>
+            <GroupBox Grid.Column="1" Header="Servers:" Margin="0,0,10,0">
+                <CheckBox Name="chkSurpressDCs" Content="Suppress Domain Controllers" VerticalAlignment="Center" Margin="20,0,0,0" />
+            </GroupBox>
+        </Grid>
+        <GroupBox Grid.Row="4" Header="Drawing options:"
+                  IsEnabled="{Binding ElementName=chkDrawExchange,Path=IsChecked,Mode=OneWay}">
+            <CheckBox Name="chkUseADSites" Content="Draw Active Directory Sites instead of Exchange RoutingGroups" VerticalAlignment="Center" Margin="20,0,0,0" Checked="chkUseADSites_Checked" />
+        </GroupBox>
+    </Grid>
+</UserControl>
