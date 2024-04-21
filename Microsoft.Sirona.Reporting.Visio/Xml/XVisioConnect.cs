@@ -18,7 +18,7 @@ namespace Mihelcic.Net.Visio.Xml
         /// <summary>
         /// Constructs Visio Connect Object
         /// </summary>
-        /// <param name="element">XElement that represents Cnnect Object</param>
+        /// <param name="element">XElement that represents Connect Object</param>
         public XVisioConnect(XElement element)
         {
             if (element == null)

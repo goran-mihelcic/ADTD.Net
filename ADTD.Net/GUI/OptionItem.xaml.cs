@@ -25,7 +25,7 @@ namespace Mihelcic.Net.Visio.Diagrammer
             InitializeComponent();
 
             dlgBrowseOpen = new OpenFileDialog();
-            dlgBrowseOpen.Filter = "Log Files (*.Log)|*.Log|Text Files|*.txt|All Files|*.*";
+            dlgBrowseOpen.Filter = $"{Strings.LogFiles} (*.Log)|*.Log|Text Files|*.txt|All Files|*.*";
             dlgBrowseOpen.AddExtension = true;
             dlgBrowseOpen.CheckFileExists = false;
         }
@@ -66,7 +66,7 @@ namespace Mihelcic.Net.Visio.Diagrammer
 
                     tBox.Width = 300;
                     Button btnBrowse = new Button();
-                    btnBrowse.Content = "Browse";
+                    btnBrowse.Content = Strings.Browse;
                     btnBrowse.Click += btnBrowse_Click;
                     panel.Children.Add(label);
                     panel.Children.Add(tBox);

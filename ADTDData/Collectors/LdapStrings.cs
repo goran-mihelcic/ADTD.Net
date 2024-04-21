@@ -22,5 +22,14 @@
         public const string SiteLinkClass = "SiteLink";
         public const string SiteSettingClass = "nTDSSiteSettings";
         public const string SiteSettingCn = "CN=NTDS Site Settings";
+        public const string ObjectClass = "objectClass";
+        public const string TrustedDomain = "trustedDomain";
+        public const string TrustDirection = "trustDirection";
+        public const string TrustAttributes = "trustAttributes";
+        public const string TrustPartner = "trustPartner";
+        public const string TrustType = "trustType";
+        public const string FlatName = "flatName";
+        public const string DnsRoot = "dnsRoot";
+        public const string NCName = "nCName";
     }
 }

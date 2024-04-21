@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace Mihelcic.Net.Visio.Data
 {
@@ -62,7 +63,7 @@ namespace Mihelcic.Net.Visio.Data
         /// </summary>
         /// <param name="parameters">Dictionary of reader parameters</param>
         /// <returns>Success of read</returns>
-        public bool? Read(Dictionary<string, object> parameters)
+        public bool? Read(Dictionary<string, object> parameters, ReportProgress statusCallback)
         {
             if (parameters == null)
                 return null;
@@ -79,7 +80,7 @@ namespace Mihelcic.Net.Visio.Data
                 if (parameters.ContainsKey(ParameterNames.LoginInfo))
                     _loginInfo = (LoginInfo)parameters[ParameterNames.LoginInfo];
 
-                bool? result = GetData();
+                bool? result = GetData(statusCallback);
 
                 return result;
             }
@@ -96,24 +97,23 @@ namespace Mihelcic.Net.Visio.Data
         /// </summary>
         /// <param name="parameters">Reader Parameters</param>
         /// <returns>Success</returns>
-        public bool Connect(Dictionary<string, object> parameters)
+        public bool Connect(Dictionary<string, object> parameters, ReportProgress statusCallback)
         {
             if (parameters == null || parameters[ParameterNames.LoginInfo] == null || !(parameters[ParameterNames.LoginInfo] is LoginInfo))
                 return false;
-            _connected = Mihelcic.Net.Visio.Data.LdapReader.VerifyAuthentication(true, false, false, (LoginInfo)parameters[ParameterNames.LoginInfo]);
+            _connected = Mihelcic.Net.Visio.Data.LdapReader.VerifyAuthentication(true, false, false, (LoginInfo)parameters[ParameterNames.LoginInfo], statusCallback);
             return _connected;
         }
 
         #endregion
 
         #region Private Methods
-        private bool GetData()
+        private bool GetData(ReportProgress statusCallback)
         {
             try
             {
                 Logger.TraceVerbose(TrcStrings.StartDomainRdr);
-                ReadDomainData();
-                return true;
+                return ReadDomainData(statusCallback);
             }
             catch (Exception ex)
             {
@@ -123,8 +123,9 @@ namespace Mihelcic.Net.Visio.Data
             }
         }
 
-        private void ReadDomainData()
+        private bool ReadDomainData(ReportProgress statusCallback)
         {
+            bool result = false;
             try
             {
                 HashSet<string> realms = new HashSet<string>();
@@ -150,7 +151,7 @@ namespace Mihelcic.Net.Visio.Data
                 SearchResult schResult = schemaSearch.GetOne();
 
                 string schemaMaster = (new LdapSearch()).SearchForReference(schResult.Properties[LdapAttrNames.FSMORoleOwner].ToString().Replace($"{LdapStrings.NtdsSettingsCn},", String.Empty), LdapAttrNames.DNSHostName, _loginInfo);
-                string ffl = "No Data";
+                string ffl = Strings.NoData;
                 if (partResult.Properties.ContainsKey(LdapAttrNames.msDSBehaviorVersion) && partResult.Properties[LdapAttrNames.msDSBehaviorVersion] != null)
                     ffl = GetForestFunctionalLevel(Convert.ToInt32(partResult.Properties[LdapAttrNames.msDSBehaviorVersion].ToString() ?? "0"));
                 string domainNamingMaster = (new LdapSearch()).SearchForReference(partResult.Properties[LdapAttrNames.FSMORoleOwner].ToString().Replace($"{LdapStrings.NtdsSettingsCn},", String.Empty), LdapAttrNames.DNSHostName, _loginInfo);
@@ -158,8 +159,10 @@ namespace Mihelcic.Net.Visio.Data
                 String schemaVersionDecoded = GetSchemaVersion(schemaVersion.ToString());
 
                 // ADD DOMAINS
+                int i = 1;
                 foreach (ScopeItem domainResult in LdapReader.DomainList)
                 {
+                    statusCallback($"{Strings.StatusDrawingDomains} ({i})");
                     StringBuilder text = new StringBuilder();
                     StringBuilder comment = new StringBuilder();
 
@@ -203,6 +206,7 @@ namespace Mihelcic.Net.Visio.Data
                         newDomain.LayoutParams.Add(LayoutParameters.TopMargin, 10 + (numLines * 5));
 
                     this.Data.AddShape(newDomain);
+                    i++;
                 }
 
                 // ADD Servers
@@ -218,10 +222,12 @@ namespace Mihelcic.Net.Visio.Data
                     serverSearch.Scope = SearchScope.Subtree;
                     serverSearch.PropertiesToLoad = $"{LdapAttrNames.ObjectCategory},{LdapAttrNames.ServerReference},{LdapAttrNames.options}";
                     List<SearchResult> serverResults = serverSearch.GetAll();
+                    i = 1;
                     foreach (SearchResult serverResult in serverResults)
                     {
                         try
                         {
+                            statusCallback($"{Strings.StatusDrawingServers} ({i})");
                             Logger.TraceVerbose(TrcStrings.SrvCollection, serverResult.Path);
                             StringBuilder text = new StringBuilder();
                             StringBuilder comment = new StringBuilder();
@@ -290,96 +296,72 @@ namespace Mihelcic.Net.Visio.Data
                         {
                             Logger.TraceException(exception.ToString());
                             Debug.WriteLine(TrcStrings.Exception, exception.Message as object);
+                            if (exception.HResult == -2147023541)
+                                throw;
                         }
+                        i++;
                     }
                 }
 
                 //Read Realm Data
-                DirectoryContext forestContext = LdapReader.GetDirectoryContext(DirectoryContextType.Forest, _loginInfo);
-                Forest forest = Forest.GetForest(forestContext);
-                foreach (TrustRelationshipInformation trust in forest.GetAllTrustRelationships())
+                int x = 1;
+                int y = 1;
+                foreach (ScopeItem domainResult in LdapReader.DomainList)
                 {
-                    string source = trust.SourceName;
-                    string target = trust.TargetName;
-                    TrustDirection direction = trust.TrustDirection;
-                    TrustType type = trust.TrustType;
-                    dxShape targetRealm = null;
-                    if (!realms.Any(r => r.ToLowerInvariant() == target.ToLowerInvariant()))
+                    string source = domainResult.Name;
+                    DirectoryEntry domainEntry = LdapReader.GetDirectoryEntry($"{LdapReader.LdapPrefix}{source}/CN=System,{domainResult.Properties[LdapAttrNames.nCName]}", _loginInfo);
+                    LdapSearch trustSearch = new LdapSearch(domainEntry);
+                    trustSearch.filter = $"({LdapStrings.ObjectClass}={LdapStrings.TrustedDomain})";
+                    trustSearch.Scope = SearchScope.Subtree;
+                    trustSearch.PropertiesToLoad = $"{LdapStrings.TrustDirection},{LdapStrings.TrustAttributes},{LdapStrings.TrustPartner},{LdapStrings.TrustType},{LdapStrings.FlatName}";
+                    foreach (SearchResult ldapRealm in trustSearch.GetAll())
                     {
-                        StringBuilder comment = new StringBuilder();
-                        targetRealm = new dxShape(ShapeRsx.RealmPfx, target, ShapeRsx.RealmShape, LayoutType.Matrix);
-                        comment.AppendLine(target);
-                        targetRealm.Comment = comment.ToString();
-                        targetRealm.LayoutParams = new DomainLayoutParameters().GetLayoutParameters();
-                        targetRealm.Header = target;
-                        this.Data.AddShape(targetRealm);
-                        realms.Add(target);
-                    }
-                    else
-                        targetRealm = this.Data.GetNode(new string[] { ShapeRsx.DomainPfx, ShapeRsx.RealmPfx }, target);
-                    dxShape sourceRealm = this.Data.GetNode(new string[] { ShapeRsx.DomainPfx, ShapeRsx.RealmPfx }, source);
-
-                    // Add Connection
-                    StringBuilder commentL = new StringBuilder();
-                    DecodeTrust(sourceRealm, targetRealm, type, direction, out dxConnection connection);
-
-                    connection.HeaderStyle = TextStyle.SmallNormalItalic;
-                    connection.AddAttribute(AttributeNames.TrustType, type);
-                    connection.AddAttribute(AttributeNames.TrustDirection, direction);
-                    commentL.AppendLine(connection.Name);
-                    commentL.AppendLine(String.Format(Strings.TrustTypeComment, type));
-                    commentL.AppendLine(String.Format(Strings.TrustDirectionComment, direction));
-                    connection.Comment = commentL.ToString();
-                    this.Data.AddConnection(connection);
-                }
-
-                //Read Domain Trusts
-                foreach (ScopeItem myDomain in LdapReader.DomainList)
-                {
-                    DirectoryContext domainContext = LdapReader.GetDirectoryContext(DirectoryContextType.Domain, myDomain.Name, _loginInfo);
-                    Domain domain = Domain.GetDomain(domainContext);
-                    foreach (TrustRelationshipInformation trust in domain.GetAllTrustRelationships())
-                    {
-                        string source = trust.SourceName;
-                        string target = trust.TargetName;
-                        TrustDirection direction = trust.TrustDirection;
-                        TrustType type = trust.TrustType;
+                        DomainTrust trust = new DomainTrust(ldapRealm);
                         dxShape targetRealm = null;
-                        if (!realms.Any(r => r.ToLowerInvariant() == target.ToLowerInvariant()))
+                        if (!realms.Any(r => r.ToLowerInvariant() == trust.Target.ToLowerInvariant()))
                         {
+                            statusCallback($"{Strings.StatusDrawingRealms} ({x})");
                             StringBuilder comment = new StringBuilder();
-                            targetRealm = new dxShape(ShapeRsx.RealmPfx, target, ShapeRsx.RealmShape, LayoutType.Matrix);
-                            comment.AppendLine(target);
+                            targetRealm = new dxShape(ShapeRsx.RealmPfx, trust.Target, ShapeRsx.RealmShape, LayoutType.Matrix);
+                            comment.AppendLine(trust.Target);
                             targetRealm.Comment = comment.ToString();
                             targetRealm.LayoutParams = new DomainLayoutParameters().GetLayoutParameters();
-                            targetRealm.Header = target;
+                            targetRealm.Header = trust.Target;
                             this.Data.AddShape(targetRealm);
-                            realms.Add(target);
+                            realms.Add(trust.Target);
+                            x++;
                         }
                         else
-                            targetRealm = this.Data.GetNode(new string[] {ShapeRsx.DomainPfx, ShapeRsx.RealmPfx }, target);
-                        dxShape sourceRealm = this.Data.GetNode(new string[] {ShapeRsx.DomainPfx, ShapeRsx.RealmPfx }, source);
+                            targetRealm = this.Data.GetNode(new string[] { ShapeRsx.DomainPfx, ShapeRsx.RealmPfx }, trust.Target);
+                        dxShape sourceRealm = this.Data.GetNode(new string[] { ShapeRsx.DomainPfx, ShapeRsx.RealmPfx }, source);
 
                         // Add Connection
-                        StringBuilder commentL = new StringBuilder();
-                        DecodeTrust(sourceRealm, targetRealm, type, direction, out dxConnection connection);
+                        statusCallback($"{Strings.StatusDrawingTrusts} ({y})");
+                        //StringBuilder commentL = new StringBuilder();
+                        DecodeTrust(sourceRealm, targetRealm, trust.Type, trust.Direction, out dxConnection connection);
 
                         connection.HeaderStyle = TextStyle.SmallNormalItalic;
-                        connection.AddAttribute(AttributeNames.TrustType, type);
-                        connection.AddAttribute(AttributeNames.TrustDirection, direction);
-                        commentL.AppendLine(connection.Name);
-                        commentL.AppendLine(String.Format(Strings.TrustTypeComment, type));
-                        commentL.AppendLine(String.Format(Strings.TrustDirectionComment, direction));
-                        connection.Comment = commentL.ToString();
+                        connection.AddAttribute(AttributeNames.TrustType, trust.Type);
+                        connection.AddAttribute(AttributeNames.TrustDirection, trust.Direction);
+                        //commentL.AppendLine(connection.Name);
+                        //commentL.AppendLine(String.Format(Strings.TrustTypeComment, trust.Type));
+                        //commentL.AppendLine(String.Format(Strings.TrustDirectionComment, trust.Direction));
+                        //connection.Comment = commentL.ToString();
+                        connection.Comment = GetTrustComment(trust, connection);
                         this.Data.AddConnection(connection);
+                        y++;
                     }
                 }
-            }
+                result = true;
+              }
             catch (Exception exception)
             {
                 Logger.TraceException(exception.ToString());
                 Debug.WriteLine(TrcStrings.Exception, exception.Message as object);
+                if (exception.HResult == -2147016646)
+                    throw;
             }
+            return result;
         }
 
         private string GetDomainNC(string path)
@@ -425,7 +407,7 @@ namespace Mihelcic.Net.Visio.Data
                     else
                         return Strings.Win2000Native;
                 case 1:
-                    return Strings.Win2003Interim; 
+                    return Strings.Win2003Interim;
                 case 2:
                     return Strings.Win2003Native;
                 case 3:
@@ -522,6 +504,23 @@ namespace Mihelcic.Net.Visio.Data
             }
 
             connection.ShapeColor = shapeColor;
+        }
+
+        private string GetTrustComment(DomainTrust trust, dxConnection connection)
+        {
+            StringBuilder commentL = new StringBuilder();
+            commentL.AppendLine(connection.Name);
+            commentL.AppendLine(String.Format(Strings.TrustTypeComment, trust.Type));
+            commentL.AppendLine(String.Format(Strings.TrustDirectionComment, trust.Direction));
+            if(trust.Attributes.Count() > 0)
+            {
+                commentL.AppendLine("Trust Attributes:");
+                foreach(var attr in trust.Attributes)
+                {
+                    commentL.AppendLine($"  - {attr}");
+                }
+            }
+            return commentL.ToString();
         }
 
         #endregion

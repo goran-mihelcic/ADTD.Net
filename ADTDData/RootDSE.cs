@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mihelcic.Net.Visio.Common;
+using System;
 using System.DirectoryServices;
 using System.Text;
 
@@ -19,6 +20,7 @@ namespace Mihelcic.Net.Visio.Data
         //defaultNamingContext
         //configurationNamingContext 
         public string ConfigurationNamingContext { get; set; }
+        public bool IsValid {  get; set; }
 
         #endregion
 
@@ -26,13 +28,22 @@ namespace Mihelcic.Net.Visio.Data
 
         public RootDSE(string domainDnsName)
         {
-            DomainDnsName = domainDnsName;
-            var entry = new DirectoryEntry($"LDAP://{domainDnsName}/RootDSE");
-            ServerName = entry.Properties["dnsHostName"].Value.ToString();
-            RootDomainNamingContext = entry.Properties["rootDomainNamingContext"].Value.ToString();
-            SchemaNamingContext = entry.Properties["schemaNamingContext"].Value.ToString();
-            ConfigurationNamingContext = entry.Properties["configurationNamingContext"].Value.ToString();
-            //DomainDnsName = entry.Properties[""].Value.ToString();
+            IsValid = false;
+            try
+            {
+                DomainDnsName = domainDnsName;
+                var entry = new DirectoryEntry($"LDAP://{domainDnsName}/RootDSE");
+                ServerName = entry.Properties["dnsHostName"].Value.ToString();
+                RootDomainNamingContext = entry.Properties["rootDomainNamingContext"].Value.ToString();
+                SchemaNamingContext = entry.Properties["schemaNamingContext"].Value.ToString();
+                ConfigurationNamingContext = entry.Properties["configurationNamingContext"].Value.ToString();
+                IsValid = true;
+                //DomainDnsName = entry.Properties[""].Value.ToString();
+            }
+            catch (Exception ex)
+            {
+                Logger.TraceException(ex.Message);
+            }
         }
 
         public override string ToString()

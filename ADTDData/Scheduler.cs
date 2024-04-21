@@ -15,7 +15,7 @@ namespace Mihelcic.Net.Visio.Common
 {
     public class Scheduler
     {
-        public delegate void ReportProgress(string message);
+        //public delegate void ReportProgress(string message);
         public delegate void EndRun(string message);
 
         #region Private Fields
@@ -60,6 +60,7 @@ namespace Mihelcic.Net.Visio.Common
                     if (worker.WorkerSupportsCancellation)
                     {
                         worker.CancelAsync();
+                        worker.Dispose();
                     }
                 }
             }
@@ -77,7 +78,7 @@ namespace Mihelcic.Net.Visio.Common
                 WorkerParameters parameters = e.Argument as WorkerParameters;
                 worker.ReportProgress(0, $"{parameters.Name} - {Mihelcic.Net.Visio.Strings.StatusConnecting}");
 
-                if (parameters.Reader.Connect(parameters.Parameters))
+                if (parameters.Reader.Connect(parameters.Parameters, _report))
                 {
                     if (worker.CancellationPending)
                     {
@@ -87,125 +88,129 @@ namespace Mihelcic.Net.Visio.Common
                     worker.ReportProgress(0, $"{parameters.Name} - {Mihelcic.Net.Visio.Strings.StatusConnected}");
                     worker.ReportProgress(0, $"{parameters.Name} - {Mihelcic.Net.Visio.Strings.StatusCollecting}");
 
-                    parameters.Reader.Read(parameters.Parameters);
-                    Mihelcic.Net.Visio.Data.IData data = parameters.Reader.Data;
-                    string visioFileName = Logger.ParseFilePath(parameters[ParameterNames.VisioFileName].ToString());
-
-                    if (parameters[ParameterNames.ExportXML].ToString().ToLowerInvariant() == "true")
+                    bool? result = parameters.Reader.Read(parameters.Parameters, _report);
+                    if (result.HasValue && result.Value)
                     {
-                        string dataFile = Path.ChangeExtension(visioFileName, "Xml");
-                        worker.ReportProgress(0, $"{parameters.Name} - {Mihelcic.Net.Visio.Strings.StatusXml}");
+                        Mihelcic.Net.Visio.Data.IData data = parameters.Reader.Data;
+                        string visioFileName = Logger.ParseFilePath(parameters[ParameterNames.VisioFileName].ToString());
+
+                        if (parameters[ParameterNames.ExportXML].ToString().ToLowerInvariant() == "true")
+                        {
+                            string dataFile = Path.ChangeExtension(visioFileName, "Xml");
+                            worker.ReportProgress(0, $"{parameters.Name} - {Mihelcic.Net.Visio.Strings.StatusXml}");
+                            if (worker.CancellationPending)
+                            {
+                                e.Cancel = true;
+                                return;
+                            }
+                            data.SaveXml(dataFile);
+                        }
+
+                        if (parameters[ParameterNames.ExportCSV].ToString().ToLowerInvariant() == "true")
+                        {
+                            string dataFile = Path.ChangeExtension(visioFileName, "csv");
+                            worker.ReportProgress(0, $"{parameters.Name} - {Mihelcic.Net.Visio.Strings.StatusCsv}");
+                            if (worker.CancellationPending)
+                            {
+                                e.Cancel = true;
+                                return;
+                            }
+                            data.SaveCsv(dataFile);
+                        }
+
+                        worker.ReportProgress(0, $"{parameters.Name} - {Mihelcic.Net.Visio.Strings.StatusCreating}");
+
+                        byte[] template = Mihelcic.Net.Visio.Common.Properties.Resources.Template_Empty;
+                        byte[] stencil = Mihelcic.Net.Visio.Common.Properties.Resources.Stencil;
+
+                        using (MemoryStream templateStream = new MemoryStream(template))
+                        {
+                            using (FileStream docStream = new FileStream(visioFileName, FileMode.Create))
+                            {
+                                templateStream.WriteTo(docStream);
+                            }
+                        }
                         if (worker.CancellationPending)
                         {
                             e.Cancel = true;
                             return;
                         }
-                        data.SaveXml(dataFile);
-                    }
 
-                    if (parameters[ParameterNames.ExportCSV].ToString().ToLowerInvariant() == "true")
-                    {
-                        string dataFile = Path.ChangeExtension(visioFileName, "csv");
-                        worker.ReportProgress(0, $"{parameters.Name} - {Mihelcic.Net.Visio.Strings.StatusCsv}");
-                        if (worker.CancellationPending)
+                        string stencilFileName = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
+
+                        using (MemoryStream stencilStream = new MemoryStream(stencil))
                         {
-                            e.Cancel = true;
-                            return;
+                            using (FileStream stencilTmpStream = new FileStream(stencilFileName, FileMode.Create))
+                            {
+                                stencilStream.WriteTo(stencilTmpStream);
+                            }
                         }
-                        data.SaveCsv(dataFile);
-                    }
 
-                    worker.ReportProgress(0, $"{parameters.Name} - {Mihelcic.Net.Visio.Strings.StatusCreating}");
-
-                    byte[] template = Mihelcic.Net.Visio.Common.Properties.Resources.Template_Empty;
-                    byte[] stencil = Mihelcic.Net.Visio.Common.Properties.Resources.Stencil;
-
-                    using (MemoryStream templateStream = new MemoryStream(template))
-                    {
-                        using (FileStream docStream = new FileStream(visioFileName, FileMode.Create))
+                        XVisioPackage document = new XVisioPackage(visioFileName, stencilFileName);
+                        Diagram diagram = new Diagram(parameters.Layout);
+                        foreach (dxShape shape in data.Shapes)
                         {
-                            templateStream.WriteTo(docStream);
+                            IDiagramNode node = VisioAddShape(shape, document, diagram);
+                            if (worker.CancellationPending)
+                            {
+                                e.Cancel = true;
+                                return;
+                            }
                         }
-                    }
-                    if (worker.CancellationPending)
-                    {
-                        e.Cancel = true;
-                        return;
-                    }
 
-                    string stencilFileName = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
-
-                    using (MemoryStream stencilStream = new MemoryStream(stencil))
-                    {
-                        using (FileStream stencilTmpStream = new FileStream(stencilFileName, FileMode.Create))
+                        foreach (dxConnection connection in data.Connections)
                         {
-                            stencilStream.WriteTo(stencilTmpStream);
+                            VisioAddConnection(connection, document, diagram);
+                            if (worker.CancellationPending)
+                            {
+                                e.Cancel = true;
+                                return;
+                            }
                         }
-                    }
 
-                    XVisioPackage document = new XVisioPackage(visioFileName, stencilFileName);
-                    Diagram diagram = new Diagram(parameters.Layout);
-                    foreach (dxShape shape in data.Shapes)
-                    {
-                        IDiagramNode node = VisioAddShape(shape, document, diagram);
-                        if (worker.CancellationPending)
+                        worker.ReportProgress(0, $"{parameters.Name} - {Mihelcic.Net.Visio.Strings.StatusArranging}");
+                        diagram.Arrange();
+
+                        // Change Page size
+                        XVisioHelper.SetPageSize(document, diagram.Width, diagram.Height);
+
+                        // Add Nodes
+                        worker.ReportProgress(0, $"{parameters.Name} - {Mihelcic.Net.Visio.Strings.StatusNodes}");
+                        foreach (DiagramNode node in diagram.Nodes)
                         {
-                            e.Cancel = true;
-                            return;
+                            AddDiagramNode(diagram, node, document);
+                            if (worker.CancellationPending)
+                            {
+                                e.Cancel = true;
+                                return;
+                            }
                         }
-                    }
 
-                    foreach (dxConnection connection in data.Connections)
-                    {
-                        VisioAddConnection(connection, document, diagram);
-                        if (worker.CancellationPending)
+                        worker.ReportProgress(0, $"{parameters.Name} - {Mihelcic.Net.Visio.Strings.StatusConnections}");
+                        foreach (DiagramEdge edge in diagram.Edges.Where(c => c.Visible))
                         {
-                            e.Cancel = true;
-                            return;
+                            Double? tickness = edge.Presentation.Thickness;
+                            XVisioHelper.AddConnection(document, edge.Presentation.MasterName, edge.Name, edge.From.Name, edge.To.Name, edge.TwoWay, tickness);
+                            if (edge.Presentation.Color != null)
+                                XVisioHelper.ChangeEdgeColor(document, edge.Name, edge.Presentation.Color.Value);
+
+                            if (!String.IsNullOrWhiteSpace(edge.Presentation.Heading))
+                                XVisioHelper.AddShapeText(document, edge.Name, edge.Presentation.Heading, (TextStyle)Enum.Parse(typeof(TextStyle), edge.Presentation.HeadingStyle));
+                            if (!String.IsNullOrWhiteSpace(edge.Presentation.Comment))
+                                XVisioHelper.AddComment(document, edge.Name, edge.Presentation.Comment);
+                            if (worker.CancellationPending)
+                            {
+                                e.Cancel = true;
+                                return;
+                            }
                         }
+
+                        document.RecalcDocument();
+                        worker.ReportProgress(0, $"{parameters.Name} - {Mihelcic.Net.Visio.Strings.StatusSaving}");
+                        document.Save();
+                        document.Close();
                     }
-
-                    worker.ReportProgress(0, $"{parameters.Name} - {Mihelcic.Net.Visio.Strings.StatusArranging}");
-                    diagram.Arrange();
-
-                    // Change Page size
-                    XVisioHelper.SetPageSize(document, diagram.Width, diagram.Height);
-
-                    // Add Nodes
-                    worker.ReportProgress(0, $"{parameters.Name} - {Mihelcic.Net.Visio.Strings.StatusNodes}");
-                    foreach (DiagramNode node in diagram.Nodes)
-                    {
-                        AddDiagramNode(diagram, node, document);
-                        if (worker.CancellationPending)
-                        {
-                            e.Cancel = true;
-                            return;
-                        }
-                    }
-
-                    worker.ReportProgress(0, $"{parameters.Name} - {Mihelcic.Net.Visio.Strings.StatusConnections}");
-                    foreach (DiagramEdge edge in diagram.Edges.Where(c => c.Visible))
-                    {
-                        Double? tickness = edge.Presentation.Thickness;
-                        XVisioHelper.AddConnection(document, edge.Presentation.MasterName, edge.Name, edge.From.Name, edge.To.Name, edge.TwoWay, tickness);
-                        if (edge.Presentation.Color != null)
-                            XVisioHelper.ChangeEdgeColor(document, edge.Name, edge.Presentation.Color.Value);
-
-                        if (!String.IsNullOrWhiteSpace(edge.Presentation.Heading))
-                            XVisioHelper.AddShapeText(document, edge.Name, edge.Presentation.Heading, (TextStyle)Enum.Parse(typeof(TextStyle), edge.Presentation.HeadingStyle));
-                        if (!String.IsNullOrWhiteSpace(edge.Presentation.Comment))
-                            XVisioHelper.AddComment(document, edge.Name, edge.Presentation.Comment);
-                        if (worker.CancellationPending)
-                        {
-                            e.Cancel = true;
-                            return;
-                        }
-                    }
-
-                    document.RecalcDocument();
-                    worker.ReportProgress(0, $"{parameters.Name} - {Mihelcic.Net.Visio.Strings.StatusSaving}");
-                    document.Save();
-                    document.Close();
+                    else worker.ReportProgress(0, $"{parameters.Name} - FAILED");
                 }
                 else
                 {
@@ -236,7 +241,9 @@ namespace Mihelcic.Net.Visio.Common
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             DeRegister(worker);
-            _end($"{Mihelcic.Net.Visio.Strings.StatusCompleted}");
+            lock (_workerLock)
+                if (_count == 0)
+                    _end($"{Mihelcic.Net.Visio.Strings.StatusCompleted}");
         }
 
         private IDiagramNode VisioAddShape(dxShape shape, XVisioPackage document, Diagram diagram)

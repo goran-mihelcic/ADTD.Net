@@ -10,8 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Forms;
 
 namespace Mihelcic.Net.Visio.Diagrammer
 {
@@ -25,6 +23,7 @@ namespace Mihelcic.Net.Visio.Diagrammer
         readonly ToolSelection _selection = new ToolSelection();
         ApplicationConfiguration _configuration;
         readonly Scheduler _scheduler;
+        public Statuses StatusList = new Statuses();
 
         public ApplicationConfiguration Configuration { get { return _configuration; } set { _configuration = value; } }
 
@@ -56,6 +55,8 @@ namespace Mihelcic.Net.Visio.Diagrammer
 
             InitializeComponent();
 
+            StatusText.DataContext = StatusList;
+
             _scheduler = new Scheduler(ReportProgress, EndSchedule);
 
             mySelection.SetConfiguration(Configuration);
@@ -70,9 +71,7 @@ namespace Mihelcic.Net.Visio.Diagrammer
             string tracePath = traceParam == null ? "ADTD.trc.log" : Path.Combine(Logger.ParsePath(traceParam.Value.ToString()), "ADTD.trc.log");
 
             Logger.RegisterTrace(tracePath);
-            //Logger.TraceVerbose("TEST");
             Logger.RegisterDebug(debugPath);
-            //Debug.WriteLine("TEST");
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -80,12 +79,11 @@ namespace Mihelcic.Net.Visio.Diagrammer
             try
             {
                 this.BindingGroup.BeginEdit();
-                ReportProgress("Validate settings first");
+                ReportProgress(Strings.ValidateFirst);
             }
             catch (Exception ex)
             {
                 Logger.TraceException(ex.ToString());
-                Debug.WriteLine("EXCEPTION \n{0}", ex);
             }
         }
 
@@ -124,11 +122,10 @@ namespace Mihelcic.Net.Visio.Diagrammer
             catch (Exception ex)
             {
                 Logger.TraceException(ex.ToString());
-                Debug.WriteLine("EXCEPTION \n{0}", ex);
             }
         }
 
-        private void saveSettings()
+        private void SaveSettings()
         {
             try
             {
@@ -138,13 +135,12 @@ namespace Mihelcic.Net.Visio.Diagrammer
             catch (Exception ex)
             {
                 Logger.TraceException(ex.ToString());
-                Debug.WriteLine("EXCEPTION \n{0}", ex);
             }
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            saveSettings();
+            SaveSettings();
             Logger.Close();
         }
 
@@ -164,11 +160,31 @@ namespace Mihelcic.Net.Visio.Diagrammer
             catch (Exception ex)
             {
                 Logger.TraceException(ex.ToString());
-                Debug.WriteLine("EXCEPTION \n{0}", ex);
             }
         }
 
         private void btnDraw_Click(object sender, RoutedEventArgs e)
+        {
+            if(btnDraw.Content.ToString() == Strings.DrawBtn)
+            {
+                btnDraw.Content = Strings.CancelBtn;
+                DrawDiagrams();
+            }
+            else
+            {
+                btnDraw.Content = Strings.DrawBtn;
+                CancelDrawing();
+            }
+        }
+
+        private void CancelDrawing()
+        {
+            ReportProgress(Strings.DrawingCancelled);
+            _scheduler.Cancel();
+            SetVisibility(true);
+        }
+
+        private void DrawDiagrams()
         {
             try
             {
@@ -177,7 +193,6 @@ namespace Mihelcic.Net.Visio.Diagrammer
                 {
                     SetVisibility(false);
                     LdapReader.Initialize(_configuration.Server);
-                    //Scheduler scheduler = new Scheduler(ReportProgress, EndSchedule);
                     foreach (ConfigurationItem item in Configuration.Items.Where(i => i.Selected))
                     {
                         Debug.WriteLine("Schedulling {0}", item.Name as object);
@@ -203,7 +218,6 @@ namespace Mihelcic.Net.Visio.Diagrammer
             catch (Exception ex)
             {
                 Logger.TraceException(ex.ToString());
-                Debug.WriteLine("EXCEPTION \n{0}", ex);
             }
         }
 
@@ -216,9 +230,11 @@ namespace Mihelcic.Net.Visio.Diagrammer
 
         private void SetVisibility(bool visibility)
         {
-            btnDraw.IsEnabled = visibility;
             btnExit.IsEnabled = visibility;
-            this.Cursor = visibility ? System.Windows.Input.Cursors.Arrow : System.Windows.Input.Cursors.Wait;
+            GrpHeader.IsEnabled = visibility;
+            GrpTab.IsEnabled = visibility;
+            mnuTools.IsEnabled = visibility;
+            mnuFile.IsEnabled = visibility;
         }
 
         private void DebugSelection()
@@ -262,20 +278,23 @@ namespace Mihelcic.Net.Visio.Diagrammer
             catch (Exception ex)
             {
                 Logger.TraceException(ex.ToString());
-                Debug.WriteLine("EXCEPTION \n{0}", ex);
             }
         }
 
         private void ReportProgress(string message)
         {
-            this.sbItem1.Content = message;
+            System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            {
+                //this.StatusText.Text = message;
+                StatusList.AddStatus(message);
+            });
         }
 
         private void EndSchedule(string message)
         {
             ReportProgress(message);
             SetVisibility(true);
-
+            btnDraw.Content = Strings.DrawBtn;
         }
 
         private void logonBtn_Click(object sender, RoutedEventArgs e)
@@ -291,18 +310,18 @@ namespace Mihelcic.Net.Visio.Diagrammer
             catch (Exception ex)
             {
                 Logger.TraceException(ex.ToString());
-                Debug.WriteLine("EXCEPTION \n{0}", ex);
             }
         }
 
         private void validateBtn_Click(object sender, RoutedEventArgs e)
         {
+            ReportProgress(Strings.ValidationProgress);
             if (!String.IsNullOrWhiteSpace(SelServerName.Text))
             {
                 string domain = GetRootDomainName(SelServerName.Text);
                 if (!String.IsNullOrWhiteSpace(domain))
                 {
-                    SelForest.Text = domain;
+                    _configuration.DnsForestName = domain;
                     _configuration.Validated = true;
                 }
             }
@@ -315,31 +334,40 @@ namespace Mihelcic.Net.Visio.Diagrammer
                     string server = GetServerName(domain);
                     if (!String.IsNullOrWhiteSpace(server))
                     {
-                        SelServerName.Text = server;
+                        _configuration.Server = server;
                         _configuration.Validated = true;
                     }
                 }
             }
             if(_configuration.Validated)
-                ReportProgress("Validated");
+                ReportProgress(Strings.Validated);
+            else
+                ReportProgress(Strings.ValidationFailed);
         }
 
         private string GetRootDomainName(string serverName)
         {
-            RootDSE rootDSE = new RootDSE(serverName);
-            if (rootDSE != null)
+            try
             {
-                LdapSearch cmpSearch = new LdapSearch(LdapReader.GetDirectoryEntry($"LDAP://{serverName}/CN=Partitions,{rootDSE.ConfigurationNamingContext}", _configuration.Login))
+                RootDSE rootDSE = new RootDSE(serverName);
+                if (rootDSE != null && rootDSE.IsValid)
                 {
-                    Scope = SearchScope.OneLevel,
-                    PropertiesToLoad = "dnsRoot",
-                    filter = $"(nCName={rootDSE.RootDomainNamingContext})"
-                };
-                Data.SearchResult cmpResult = cmpSearch.GetOne();
-                if (cmpResult != null)
-                {
-                    return cmpResult.GetPropertyString("dnsRoot");
+                    LdapSearch cmpSearch = new LdapSearch(LdapReader.GetDirectoryEntry($"LDAP://{serverName}/{LdapStrings.PartitionsCn},{rootDSE.ConfigurationNamingContext}", _configuration.Login))
+                    {
+                        Scope = SearchScope.OneLevel,
+                        PropertiesToLoad = LdapStrings.DnsRoot,
+                        filter = $"({LdapStrings.NCName}={rootDSE.RootDomainNamingContext})"
+                    };
+                    Data.SearchResult cmpResult = cmpSearch.GetOne();
+                    if (cmpResult != null)
+                    {
+                        return cmpResult.GetPropertyString(LdapStrings.DnsRoot);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.TraceException(ex.Message);
             }
             return null;
         }
@@ -374,6 +402,18 @@ namespace Mihelcic.Net.Visio.Diagrammer
                     }
 
                 }
+            }
+        }
+
+        private void btnGetStatus_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                (new AllStatuses(this.StatusList)).Show();
+            }
+            catch (Exception ex)
+            {
+                Logger.TraceException(ex.ToString());
             }
         }
     }

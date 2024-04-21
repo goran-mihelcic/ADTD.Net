@@ -123,6 +123,9 @@
   <data name="AboutMnu" xml:space="preserve">
     <value>O Programu</value>
   </data>
+  <data name="AllFiles" xml:space="preserve">
+    <value>Sve Datoteke</value>
+  </data>
   <data name="Browse" xml:space="preserve">
     <value>Potraži</value>
   </data>
@@ -171,6 +174,9 @@
   <data name="DrawFQDNServerNamesToolTip" xml:space="preserve">
     <value>Odaberi ovu opciju ukoliko želiš da se na dijagramu serveri označe punim imenima</value>
   </data>
+  <data name="DrawingCancelled" xml:space="preserve">
+    <value>Crtanje prekinuto</value>
+  </data>
   <data name="DrawServers" xml:space="preserve">
     <value>Iscrtaj Servere</value>
   </data>
@@ -201,6 +207,9 @@
   <data name="LanguageMnu" xml:space="preserve">
     <value>Jezik</value>
   </data>
+  <data name="LogFiles" xml:space="preserve">
+    <value>Dnevnici</value>
+  </data>
   <data name="LogOnBtn" xml:space="preserve">
     <value>Prijavi se</value>
   </data>
@@ -210,6 +219,9 @@
   <data name="MyTitle" xml:space="preserve">
     <value>Cloud Solution Architect</value>
   </data>
+  <data name="NoData" xml:space="preserve">
+    <value>Nema Podataka</value>
+  </data>
   <data name="OKBtn" xml:space="preserve">
     <value>Prihvati</value>
   </data>
@@ -217,7 +229,7 @@
     <value>Opcije</value>
   </data>
   <data name="PasswordLbl" xml:space="preserve">
-    <value>Loyinka:</value>
+    <value>Lozinka:</value>
   </data>
   <data name="Selection" xml:space="preserve">
     <value>Izbor</value>
@@ -233,6 +245,15 @@
   </data>
   <data name="StatusCollecting" xml:space="preserve">
     <value>Prikupljanje podataka...</value>
+  </data>
+  <data name="StatusCollectingDomains" xml:space="preserve">
+    <value>Prikupljanje Domain informacija</value>
+  </data>
+  <data name="StatusCollectingGeneral" xml:space="preserve">
+    <value>Prikupljanje općih informacija</value>
+  </data>
+  <data name="StatusCollectingSites" xml:space="preserve">
+    <value>Prikupljanje Site informacija</value>
   </data>
   <data name="StatusCompleted" xml:space="preserve">
     <value>Crtanje završeno</value>
@@ -272,6 +293,18 @@
   </data>
   <data name="ValidateBtn" xml:space="preserve">
     <value>Provjeri</value>
+  </data>
+  <data name="Validated" xml:space="preserve">
+    <value>Provjera u toku</value>
+  </data>
+  <data name="ValidateFirst" xml:space="preserve">
+    <value>Prvo Provjeri postavke</value>
+  </data>
+  <data name="ValidationFailed" xml:space="preserve">
+    <value>Provjera nesupjela</value>
+  </data>
+  <data name="ValidationProgress" xml:space="preserve">
+    <value>Provjera u toku</value>
   </data>
   <data name="VersionLbl" xml:space="preserve">
     <value>Verzija</value>

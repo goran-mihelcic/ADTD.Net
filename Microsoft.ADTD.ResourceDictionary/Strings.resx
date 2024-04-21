@@ -123,6 +123,9 @@
   <data name="AboutMnu" xml:space="preserve">
     <value>About</value>
   </data>
+  <data name="AllFiles" xml:space="preserve">
+    <value>All Files</value>
+  </data>
   <data name="Browse" xml:space="preserve">
     <value>Browse</value>
   </data>
@@ -171,6 +174,9 @@
   <data name="DrawFQDNServerNamesToolTip" xml:space="preserve">
     <value>Check this Box if you would like to have the Fully qualified server names in the drawing.</value>
   </data>
+  <data name="DrawingCancelled" xml:space="preserve">
+    <value>Drawing Cacelled</value>
+  </data>
   <data name="DrawServers" xml:space="preserve">
     <value>Draw Servers</value>
   </data>
@@ -201,6 +207,9 @@
   <data name="LanguageMnu" xml:space="preserve">
     <value>Language</value>
   </data>
+  <data name="LogFiles" xml:space="preserve">
+    <value>Log Files</value>
+  </data>
   <data name="LogOnBtn" xml:space="preserve">
     <value>LogOn</value>
   </data>
@@ -209,6 +218,9 @@
   </data>
   <data name="MyTitle" xml:space="preserve">
     <value>Cloud Solution Architect</value>
+  </data>
+  <data name="NoData" xml:space="preserve">
+    <value>No Data</value>
   </data>
   <data name="OKBtn" xml:space="preserve">
     <value>OK</value>
@@ -233,6 +245,15 @@
   </data>
   <data name="StatusCollecting" xml:space="preserve">
     <value>Collecting Data...</value>
+  </data>
+  <data name="StatusCollectingDomains" xml:space="preserve">
+    <value>Collecting Domain Information</value>
+  </data>
+  <data name="StatusCollectingGeneral" xml:space="preserve">
+    <value>Collecting General Information</value>
+  </data>
+  <data name="StatusCollectingSites" xml:space="preserve">
+    <value>Collecting Site Information</value>
   </data>
   <data name="StatusCompleted" xml:space="preserve">
     <value>Drawing Completed</value>
@@ -272,6 +293,18 @@
   </data>
   <data name="ValidateBtn" xml:space="preserve">
     <value>Validate</value>
+  </data>
+  <data name="Validated" xml:space="preserve">
+    <value>Validated</value>
+  </data>
+  <data name="ValidateFirst" xml:space="preserve">
+    <value>Validate settings first</value>
+  </data>
+  <data name="ValidationFailed" xml:space="preserve">
+    <value>Validation Failed</value>
+  </data>
+  <data name="ValidationProgress" xml:space="preserve">
+    <value>Validation in progress</value>
   </data>
   <data name="VersionLbl" xml:space="preserve">
     <value>Version</value>

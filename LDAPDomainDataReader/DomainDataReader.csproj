@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="DomainDataReader.cs" />
     <Compile Include="DomainLayoutParameters.cs" />
+    <Compile Include="DomainTrust.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

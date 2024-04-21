@@ -62,7 +62,7 @@
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public bool? Read(Dictionary<string, object> parameters)
+        public bool? Read(Dictionary<string, object> parameters, ReportProgress statusCallback)
         {
             if (parameters == null)
                 return null;
@@ -87,7 +87,7 @@
                 //else
                 _allSites = true;
                 _siteSelection = null;
-                bool? result = GetData();
+                bool? result = GetData(statusCallback);
 
                 return true;
             }
@@ -98,11 +98,11 @@
             }
         }
 
-        public bool Connect(Dictionary<string, object> parameters)
+        public bool Connect(Dictionary<string, object> parameters, ReportProgress statusCallback)
         {
             if (parameters == null)
                 return false;
-            _connected = Mihelcic.Net.Visio.Data.LdapReader.VerifyAuthentication(true, true, true, (LoginInfo)parameters[ParameterNames.LoginInfo]);
+            _connected = Mihelcic.Net.Visio.Data.LdapReader.VerifyAuthentication(true, true, true, (LoginInfo)parameters[ParameterNames.LoginInfo], statusCallback);
             return _connected;
         }
 
@@ -110,13 +110,12 @@
 
         #region Private Methods
 
-        private bool GetData()
+        private bool GetData(ReportProgress statusCallback)
         {
             try
             {
                 Logger.TraceVerbose(TrcStrings.StartSiteRdr);
-                ReadSiteData();
-                return true;
+                return ReadSiteData(statusCallback);
             }
             catch (Exception ex)
             {
@@ -125,8 +124,9 @@
             }
         }
 
-        private void ReadSiteData()
+        private bool ReadSiteData(ReportProgress statusCallback)
         {
+            bool result = false;
             try
             {
                 this.Data.Clear();
@@ -142,9 +142,11 @@
                     if (_siteSelection != null)
                         siteList.Add(_siteSelection);
                 }
+                int i = 1;
                 foreach (ScopeItem siteResult in siteList)
                 {
-                    StringBuilder text = new StringBuilder();
+                    statusCallback($"{Strings.StatusDrawingSites} ({i})");
+                    String text = String.Empty;
                     StringBuilder comment = new StringBuilder();
 
                     string siteName = siteResult.Name;
@@ -154,10 +156,13 @@
                     newSite.AddAttribute(AttributeNames.gPLink, (siteResult.Properties[LdapAttrNames.gPLink] ?? String.Empty).ToString());
                     newSite.AddAttribute(AttributeNames.GroupCaching, RemSiteOptions.Universal_Group_Membership_Caching);
                     newSite.AddAttribute(AttributeNames.ISTG, RemSiteOptions.ISTG);
-                    text.AppendLine(String.Format(Strings.IstgOutput, RemSiteOptions.ISTG));
-                    comment.AppendLine(String.Format(Strings.TwoLineStr, siteName, text));
-
-                    newSite.Text = text.ToString();
+                    comment.AppendLine(siteName);
+                    if (!String.IsNullOrWhiteSpace(RemSiteOptions.ISTG))
+                    {
+                        text = String.Format(Strings.IstgOutput, RemSiteOptions.ISTG);
+                        comment.AppendLine(text);
+                        newSite.Text = text.ToString();
+                    }
                     newSite.Comment = comment.ToString();
                     newSite.Header = siteName;
 
@@ -178,9 +183,11 @@
                     };
                     List<SearchResult> serverResults = serverSearch.GetAll();
 
+                    int j = 1;
                     foreach (SearchResult serverResult in serverResults)
                     {
-                        text = new StringBuilder();
+                        statusCallback($"{Strings.StatusDrawingSites} ({i}) {Strings.StatusAddingServer} ({j})");
+                        StringBuilder textSl = new StringBuilder();
                         comment = new StringBuilder();
 
                         comment.AppendLine(String.Format(Strings.SiteComment, siteName));
@@ -238,9 +245,9 @@
                         newServer.Header = serverName;
                         newServer.ColorCodedAttribute = AttributeNames.DomainFQDN;
                         newServer.SubShapeToColor = ShapeRsx.ShapeToColor;
-                        text.AppendLine(osShort);
+                        textSl.AppendLine(osShort);
                         comment.AppendLine(osShort);
-                        newServer.Text = text.ToString();
+                        newServer.Text = textSl.ToString();
                         newServer.Comment = comment.ToString();
                         newServer.HeaderStyle = TextStyle.SmallNormalBold;
                         newServer.TextStyle = TextStyle.SmallNormal;
@@ -248,14 +255,15 @@
                         //newSite.addChild(newServer);
                         newServer.LayoutParams = new dxLayoutParameters().GetLayoutParameters();
                         this.Data.AddShape(newServer, newSite);
+                        j++;
                     }
-
+                    i++;
                 }
 
                 //Read Site Links
                 string strPath = $"{LdapReader.LdapPrefixS}{LdapStrings.IPTransportDn},{LdapReader.ConfigNC}";
                 objfilter = new System.Text.StringBuilder();
-                objfilter.Append($"({LdapAttrNames.ObjectClass} = {LdapStrings.SiteLinkClass})");
+                objfilter.Append($"({LdapAttrNames.ObjectClass}={LdapStrings.SiteLinkClass})");
                 string propList = $"{LdapAttrNames.Name},{LdapAttrNames.AdsPath},{LdapAttrNames.SiteList},{LdapAttrNames.Cost},{LdapAttrNames.ReplInterval},{LdapAttrNames.options},{LdapAttrNames.Schedule}{((LdapReader.GetExSchemaVersion(_loginInfo) >= 10394) ? ",msExchCost" : String.Empty)}";
 
                 LdapSearch slSearch = new LdapSearch(LdapReader.GetDirectoryEntry(strPath, _loginInfo))
@@ -265,8 +273,10 @@
                 };
                 List<SearchResult> slResults = slSearch.GetAll();
 
+                i = 1;
                 foreach (SearchResult slResult in slResults)
                 {
+                    statusCallback($"{Strings.StatusDrawingSiteLinks} ({i})");
                     string[] sites = CastRVPC(slResult.Properties[LdapAttrNames.SiteList]);
                     if (sites.Any(s => this.Data.GetNode(ShapeRsx.SitePfx, s) != null))
                     {
@@ -340,14 +350,16 @@
                         }
 
                     }
+                    i++;
                 }
 
+                i = 1;
                 foreach (ScopeItem siteResult in siteList)
                 {
                     // Read Site Servers
                     objfilter = null;
                     objfilter = new System.Text.StringBuilder();
-                    objfilter.Append($"({LdapAttrNames.ObjectClass} = {LdapStrings.NtDsDsaClass})");
+                    objfilter.Append($"({LdapAttrNames.ObjectClass}={LdapStrings.NtDsDsaClass})");
                     LdapSearch serverSearch = new LdapSearch(siteResult.ItemDE)
                     {
                         filter = objfilter.ToString(),
@@ -361,7 +373,7 @@
                         {
                             Scope = SearchScope.Base,
                             PropertiesToLoad = LdapAttrNames.ServerReference,
-                            filter = $"({LdapAttrNames.ObjectClass} = *)"
+                            filter = $"({LdapAttrNames.ObjectClass}=*)"
                         };
                         SearchResult srvResult = srvSearch.GetOne();
 
@@ -370,7 +382,7 @@
                         {
                             Scope = SearchScope.Base,
                             PropertiesToLoad = $"{LdapAttrNames.Name},{LdapAttrNames.DNSHostName}",
-                            filter = $"({LdapAttrNames.ObjectClass} =*)"
+                            filter = $"({LdapAttrNames.ObjectClass}=*)"
                         };
                         SearchResult cmpResult = cmpSearch.GetOne();
 
@@ -388,6 +400,7 @@
                         List<SearchResult> coResults = coSearch.GetAll();
                         foreach (SearchResult coResult in coResults)
                         {
+                            statusCallback($"{Strings.StatusDrawingConnectionObjects} ({i})");
                             string fromServer = LdapReader.ServerNameFromNTDSSettings(coResult.Properties[LdapAttrNames.FromServer].ToString()).ToLower();
                             dxShape from = this.Data.GetNode(ShapeRsx.DCPfx, fromServer);
                             dxShape to = this.Data.GetNode(ShapeRsx.DCPfx, toServer);
@@ -422,16 +435,19 @@
                                 LayoutParams = new dxLayoutParameters().GetLayoutParameters()
                             };
                             this.Data.AddConnection(newCO);
+                            i++;
                         }
                     }
                 }
 
                 if (_agregateSites) DoAggregate();
+                result = true;
             }
             catch (Exception exception)
             {
                 Logger.TraceException(exception.ToString());
             }
+            return result;
         }
 
         private string[] CastRVPC(object input)

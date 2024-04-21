@@ -79,6 +79,15 @@ namespace Mihelcic.Net.Visio {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Files.
+        /// </summary>
+        public static string AllFiles {
+            get {
+                return ResourceManager.GetString("AllFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Browse.
         /// </summary>
         public static string Browse {
@@ -223,6 +232,15 @@ namespace Mihelcic.Net.Visio {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Drawing Cacelled.
+        /// </summary>
+        public static string DrawingCancelled {
+            get {
+                return ResourceManager.GetString("DrawingCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Draw Servers.
         /// </summary>
         public static string DrawServers {
@@ -313,6 +331,15 @@ namespace Mihelcic.Net.Visio {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log Files.
+        /// </summary>
+        public static string LogFiles {
+            get {
+                return ResourceManager.GetString("LogFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LogOn.
         /// </summary>
         public static string LogOnBtn {
@@ -336,6 +363,15 @@ namespace Mihelcic.Net.Visio {
         public static string MyTitle {
             get {
                 return ResourceManager.GetString("MyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Data.
+        /// </summary>
+        public static string NoData {
+            get {
+                return ResourceManager.GetString("NoData", resourceCulture);
             }
         }
         
@@ -408,6 +444,33 @@ namespace Mihelcic.Net.Visio {
         public static string StatusCollecting {
             get {
                 return ResourceManager.GetString("StatusCollecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collecting Domain Information.
+        /// </summary>
+        public static string StatusCollectingDomains {
+            get {
+                return ResourceManager.GetString("StatusCollectingDomains", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collecting General Information.
+        /// </summary>
+        public static string StatusCollectingGeneral {
+            get {
+                return ResourceManager.GetString("StatusCollectingGeneral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collecting Site Information.
+        /// </summary>
+        public static string StatusCollectingSites {
+            get {
+                return ResourceManager.GetString("StatusCollectingSites", resourceCulture);
             }
         }
         
@@ -525,6 +588,42 @@ namespace Mihelcic.Net.Visio {
         public static string ValidateBtn {
             get {
                 return ResourceManager.GetString("ValidateBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validated.
+        /// </summary>
+        public static string Validated {
+            get {
+                return ResourceManager.GetString("Validated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validate settings first.
+        /// </summary>
+        public static string ValidateFirst {
+            get {
+                return ResourceManager.GetString("ValidateFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validation Failed.
+        /// </summary>
+        public static string ValidationFailed {
+            get {
+                return ResourceManager.GetString("ValidationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validation in progress.
+        /// </summary>
+        public static string ValidationProgress {
+            get {
+                return ResourceManager.GetString("ValidationProgress", resourceCulture);
             }
         }
         

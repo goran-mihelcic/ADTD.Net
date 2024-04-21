@@ -1,7 +1,6 @@
 ﻿using Mihelcic.Net.Visio.Common;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.DirectoryServices;
 using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
@@ -20,15 +19,21 @@ namespace Mihelcic.Net.Visio.Data
         private static int _intExSchemaVersion = -1;
 
         #endregion
-        public static string SelectedDC { get { return _selectedDC; } set { _selectedDC = value; } }
+        public static string SelectedDC
+        {
+            get { return _selectedDC; }
+            set { 
+                _selectedDC = value; 
+            }
+        }
 
         #region Public Properties
         public static ScopeItem ForestRoot { get; set; }
-        
+
         public static List<ScopeItem> DomainList { get; set; }
-        
+
         public static List<ScopeItem> SiteList { get; set; }
-        
+
         public static List<ScopeItem> NCList { get; set; }
 
         public static bool Connected
@@ -76,6 +81,17 @@ namespace Mihelcic.Net.Visio.Data
             }
         }
 
+        public static string GCPrefixS
+        {
+            get
+            {
+                if (SelectedDC.Length > 1)
+                    return $"{LdapStrings.GcPrefix}{SelectedDC}/";
+                else
+                    return LdapStrings.GcPrefix;
+            }
+        }
+
         #endregion
 
         #region Public Methods
@@ -85,7 +101,7 @@ namespace Mihelcic.Net.Visio.Data
             SelectedDC = targetDC.Trim();
         }
 
-        public static bool VerifyAuthentication(bool getDomains, bool getSites, bool getNCs, LoginInfo loginInfo)
+        public static bool VerifyAuthentication(bool getDomains, bool getSites, bool getNCs, LoginInfo loginInfo, ReportProgress progressCallback)
         {
             lock (_lock)
             {
@@ -101,6 +117,7 @@ namespace Mihelcic.Net.Visio.Data
                 {
                     if (!_initialized)
                     {
+                        progressCallback(Strings.StatusCollectingGeneral);
                         _ldapRootObj = new DirectoryEntry($"{LdapPrefixS}{LdapStrings.RootDSE}");
 
                         strConfig = _ldapRootObj.Properties[LdapAttrNames.ConfigurationNamingContext][0].ToString();
@@ -110,14 +127,21 @@ namespace Mihelcic.Net.Visio.Data
 
                     if (DomainList.Count == 0)
                     {
+                        progressCallback(Strings.StatusCollectingDomains);
                         if (getDomains)
                             FillForestRoot(loginInfo);
-                        FillDomains(loginInfo);
+                        FillDomains(loginInfo, progressCallback);
                     }
                     if (getSites && SiteList.Count == 0)
-                        FillSites(loginInfo);
-                    if (getNCs && NCList.Count == 0)
-                        FillNCs();
+                    {
+                        progressCallback(Strings.StatusCollectingSites);
+                        FillSites(loginInfo, progressCallback);
+                    }
+                    //if (getNCs && NCList.Count == 0)
+                    //{
+                    //    progressCallback("Collecting Naming Context Information");
+                    //    FillNCs();
+                    //}
 
                     _initialized = true;
 
@@ -383,6 +407,7 @@ namespace Mihelcic.Net.Visio.Data
 
         public static DirectoryEntry GetDirectoryEntry(string path, LoginInfo loginInfo)
         {
+            //if (path.EndsWith("CN=CO1-CORP-DC-20,CN=Servers,CN=NA-WA-TUKDC,CN=Sites,CN=Configuration,DC=corp,DC=microsoft,DC=com")) Debugger.Break();
             Logger.TraceDebug("getDirectoryEntry({0})", path);
             if (DirectoryEntry.Exists(path))
             {
@@ -466,7 +491,7 @@ namespace Mihelcic.Net.Visio.Data
             }
         }
 
-        private static void FillDomains(LoginInfo loginInfo)
+        private static void FillDomains(LoginInfo loginInfo, ReportProgress progressCallback)
         {
             try
             {
@@ -478,8 +503,10 @@ namespace Mihelcic.Net.Visio.Data
                 domainsSearch.PropertiesToLoad = $"{LdapAttrNames.Name},{LdapAttrNames.dnsRoot},{LdapAttrNames.msDSBehaviorVersion},{LdapAttrNames.nTMixedDomain},{LdapAttrNames.nCName},{LdapAttrNames.NetBIOSName}";
                 domainsSearch.Scope = SearchScope.Subtree;
                 List<SearchResult> domainsResults = domainsSearch.GetAll();
+                int i = 1;
                 foreach (SearchResult domainsResult in domainsResults)
                 {
+                    progressCallback($"{Strings.StatusCollectingDomains} ({i})");
                     ScopeItem item = new ScopeItem(domainsResult.Properties[LdapAttrNames.dnsRoot].ToString());
                     item.Properties.Add(LdapStrings.DN, domainsResult.Path);
                     item.Properties.Add(LdapAttrNames.nCName, domainsResult.Properties[LdapAttrNames.nCName].ToString());
@@ -488,6 +515,7 @@ namespace Mihelcic.Net.Visio.Data
                     item.Properties.Add(LdapAttrNames.nTMixedDomain, domainsResult.Properties[LdapAttrNames.nTMixedDomain].ToString());
                     item.ItemDE = domainsResult.GetDirectoryEntry();
                     DomainList.Add(item);
+                    i++;
                 }
             }
             catch (Exception ex)
@@ -495,7 +523,7 @@ namespace Mihelcic.Net.Visio.Data
                 Logger.TraceException(ex.ToString());
             }
         }
-        private static void FillSites(LoginInfo loginInfo)
+        private static void FillSites(LoginInfo loginInfo, ReportProgress progressCallback)
         {
             try
             {
@@ -510,14 +538,18 @@ namespace Mihelcic.Net.Visio.Data
                 };
                 List<SearchResult> siteResults = sitesSearch.GetAll();
 
+                int i = 1;
+
                 foreach (SearchResult siteResult in siteResults)
                 {
+                    progressCallback($"{Strings.StatusCollectingSites} ({i})");
                     ScopeItem item = new ScopeItem(siteResult.Properties[LdapAttrNames.Name].ToString());
                     item.Properties.Add(LdapAttrNames.SiteOptions, GetSiteOptions(siteResult, loginInfo));
                     item.Properties.Add(LdapAttrNames.Location, (siteResult.Properties[LdapAttrNames.Location] ?? String.Empty).ToString());
                     item.Properties.Add(LdapAttrNames.gPLink, (siteResult.Properties[LdapAttrNames.gPLink] ?? String.Empty).ToString());
                     item.ItemDE = siteResult.GetDirectoryEntry();
                     SiteList.Add(item);
+                    i++;
                 }
             }
             catch (Exception ex)
@@ -526,23 +558,23 @@ namespace Mihelcic.Net.Visio.Data
             }
         }
 
-        private static void FillNCs()
-        {
-            try
-            {
+        //private static void FillNCs()
+        //{
+        //    try
+        //    {
 
-            }
-            catch (Exception)
-            {
+        //    }
+        //    catch (Exception)
+        //    {
 
-            }
-        }
+        //    }
+        //}
 
         private static TypSiteOptions GetSiteOptions(SearchResult siteData, LoginInfo loginInfo)
         {
             try
             {
-                string strObject = $"{LdapReader.LdapPrefixS}{LdapStrings.SiteSettingCn},{siteData.Path.Replace(LdapReader.LdapPrefixS, String.Empty)}"; 
+                string strObject = $"{LdapReader.LdapPrefixS}{LdapStrings.SiteSettingCn},{siteData.Path.Replace(LdapReader.LdapPrefixS, String.Empty)}";
                 System.Text.StringBuilder objfilter = new System.Text.StringBuilder();
                 objfilter.Append($"({LdapAttrNames.ObjectClass}={LdapStrings.SiteSettingClass})");
 

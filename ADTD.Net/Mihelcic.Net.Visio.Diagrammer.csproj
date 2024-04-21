@@ -114,6 +114,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GUI\AllStatuses.xaml.cs">
+      <DependentUpon>AllStatuses.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationConfiguration.cs" />
     <Compile Include="ApplSettings.cs" />
     <Compile Include="ConfigurationItem.cs" />
@@ -140,9 +143,14 @@
       <DependentUpon>SelectionContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="Statuses.cs" />
     <Compile Include="Unsafe\DCInfo.cs" />
     <Compile Include="Unsafe\Join_Info.cs" />
     <Compile Include="Unsafe\NETAPI32.cs" />
+    <Page Include="GUI\AllStatuses.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

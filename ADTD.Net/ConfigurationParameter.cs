@@ -43,7 +43,7 @@ namespace Mihelcic.Net.Visio.Diagrammer
 
         public ConfigurationParameter(XmlNode element, XmlElement paramsRoot)
         {
-            _pickerFilter = "All Files|*.*";
+            _pickerFilter = $"{Strings.AllFiles}|*.*";
             _name = element.Attributes["Name"].Value;
             _title = element.Attributes["Title"].Value;
             _toolTip = element.Attributes["ToolTip"].Value;

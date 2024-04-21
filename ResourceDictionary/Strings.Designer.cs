@@ -160,6 +160,15 @@ namespace Mihelcic.Net.Visio.Data {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Data.
+        /// </summary>
+        public static string NoData {
+            get {
+                return ResourceManager.GetString("NoData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PDC: {0}.
         /// </summary>
         public static string PDCComment {
@@ -286,6 +295,96 @@ namespace Mihelcic.Net.Visio.Data {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to adding Server.
+        /// </summary>
+        public static string StatusAddingServer {
+            get {
+                return ResourceManager.GetString("StatusAddingServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drawing Connection Objects.
+        /// </summary>
+        public static string StatusDrawingConnectionObjects {
+            get {
+                return ResourceManager.GetString("StatusDrawingConnectionObjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drawing Domains.
+        /// </summary>
+        public static string StatusDrawingDomains {
+            get {
+                return ResourceManager.GetString("StatusDrawingDomains", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drawing Realms.
+        /// </summary>
+        public static string StatusDrawingRealms {
+            get {
+                return ResourceManager.GetString("StatusDrawingRealms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drawing Servers.
+        /// </summary>
+        public static string StatusDrawingServers {
+            get {
+                return ResourceManager.GetString("StatusDrawingServers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drawing SiteLinks.
+        /// </summary>
+        public static string StatusDrawingSiteLinks {
+            get {
+                return ResourceManager.GetString("StatusDrawingSiteLinks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drawing Sites.
+        /// </summary>
+        public static string StatusDrawingSites {
+            get {
+                return ResourceManager.GetString("StatusDrawingSites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drawing Trusts.
+        /// </summary>
+        public static string StatusDrawingTrusts {
+            get {
+                return ResourceManager.GetString("StatusDrawingTrusts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Treat As External.
+        /// </summary>
+        public static string TrustAsExternal {
+            get {
+                return ResourceManager.GetString("TrustAsExternal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cross Organization.
+        /// </summary>
+        public static string TrustCrossOrganization {
+            get {
+                return ResourceManager.GetString("TrustCrossOrganization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Direction: {0}.
         /// </summary>
         public static string TrustDirectionComment {
@@ -295,11 +394,83 @@ namespace Mihelcic.Net.Visio.Data {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Forest Transitive.
+        /// </summary>
+        public static string TrustForestTransitive {
+            get {
+                return ResourceManager.GetString("TrustForestTransitive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non Transitive.
+        /// </summary>
+        public static string TrustNonTransitive {
+            get {
+                return ResourceManager.GetString("TrustNonTransitive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PIM Trust.
+        /// </summary>
+        public static string TrustPIM {
+            get {
+                return ResourceManager.GetString("TrustPIM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prevent TGT Delegation.
+        /// </summary>
+        public static string TrustPreventTGTDelegation {
+            get {
+                return ResourceManager.GetString("TrustPreventTGTDelegation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quarantined Domain.
+        /// </summary>
+        public static string TrustQuarantined_Domain {
+            get {
+                return ResourceManager.GetString("TrustQuarantined_Domain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use RC4 Encryption.
+        /// </summary>
+        public static string TrustRC4Encryption {
+            get {
+                return ResourceManager.GetString("TrustRC4Encryption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type: {0}.
         /// </summary>
         public static string TrustTypeComment {
             get {
                 return ResourceManager.GetString("TrustTypeComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Up Level Only.
+        /// </summary>
+        public static string TrustUplevelOnly {
+            get {
+                return ResourceManager.GetString("TrustUplevelOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Within Forest.
+        /// </summary>
+        public static string TrustWithinForest {
+            get {
+                return ResourceManager.GetString("TrustWithinForest", resourceCulture);
             }
         }
         

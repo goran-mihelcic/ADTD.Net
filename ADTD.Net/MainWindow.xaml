@@ -4,6 +4,7 @@
         xmlns:my="clr-namespace:Mihelcic.Net.Visio.Diagrammer"
         xmlns:prop="clr-namespace:Mihelcic.Net.Visio.Diagrammer.Properties"
         xmlns:res="clr-namespace:Mihelcic.Net.Visio;assembly=Mihelcic.Net.Visio.ResourceDictionary"
+        Name="self"
         Title="{x:Static res:Strings.MainWindowTitle}" 
         Height="607" Width="749" 
         Style="{DynamicResource WindowStyle}" 
@@ -54,7 +55,7 @@
                 <MenuItem Name="mnuHelpAbout" Header="{x:Static res:Strings.AboutMnu}" Click="mnuHelpAbout_Click" />
             </MenuItem>
         </Menu>
-        <GroupBox Grid.Row="1" Header="{x:Static res:Strings.DataSource}" Margin="5,20,5,0">
+        <GroupBox x:Name="GrpHeader" Grid.Row="1" Header="{x:Static res:Strings.DataSource}" Margin="5,20,5,0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition  Width="120" />
@@ -90,7 +91,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="140" />
             </Grid.ColumnDefinitions>
-            <TabControl Grid.Column="0" Margin="20,20,0,20" Background="Lavender">
+            <TabControl x:Name="GrpTab"  Grid.Column="0" Margin="20,20,0,20" Background="Lavender">
                 <TabItem Name="_tabsettings_TabPage0" Header="{x:Static res:Strings.Selection}" >
                     <my:Selection x:Name="mySelection"/>
                 </TabItem>
@@ -101,17 +102,26 @@
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
-                    <RowDefinition Height="40"/>
+                    <!--<RowDefinition Height="40"/>-->
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="60"/>
                 </Grid.RowDefinitions>
-                <Button Grid.Row="2" Name="btnDraw" Content="{x:Static res:Strings.DrawBtn}" Width="80" Height="30" Click="btnDraw_Click" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Configuration.Validated}" />
-                <Button Grid.Row="3" Name="btnExit" Content="{x:Static res:Strings.CloseBtn}" Width="80" Height="30" Margin="0,0,0,20" Click="btnExit_Click" />
+                <Button Grid.Row="1" Name="btnDraw" Content="{x:Static res:Strings.DrawBtn}" Width="80" Height="30" Click="btnDraw_Click" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Configuration.Validated}" />
+                <Button Grid.Row="2" Name="btnExit" Content="{x:Static res:Strings.CloseBtn}" Width="80" Height="30" Margin="0,0,0,20" Click="btnExit_Click" />
             </Grid>
 
         </Grid>
         <StatusBar Grid.Row="3" Name="StatusBar"  Background="{StaticResource StatusGradient}">
-            <StatusBarItem Name="sbItem1" Content="{x:Static res:Strings.InitialStatus}" />
+            <!--<StatusBarItem Name="sbItem1" Content="{x:Static res:Strings.InitialStatus}" />-->
+            <StatusBarItem >
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Name="btnGetStatus" Content="More" Width="40" Click="btnGetStatus_Click" />
+                        <TextBlock Text="Last Status: " FontWeight="Bold" Margin="10,0,5,0"/>
+                        <TextBlock x:Name="StatusText"  Text="{Binding Last}"/>
+                    </StackPanel>
+                </StackPanel>
+            </StatusBarItem>
         </StatusBar>
     </Grid>
 </Window>

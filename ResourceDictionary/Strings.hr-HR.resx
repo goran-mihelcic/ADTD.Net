@@ -150,6 +150,9 @@
   <data name="NameComment" xml:space="preserve">
     <value>Naziv: {0}</value>
   </data>
+  <data name="NoData" xml:space="preserve">
+    <value>Nema podataka</value>
+  </data>
   <data name="PDCComment" xml:space="preserve">
     <value>PDC: {0}</value>
   </data>
@@ -191,6 +194,30 @@
   </data>
   <data name="SiteComment" xml:space="preserve">
     <value>Lokacija: {0}</value>
+  </data>
+  <data name="StatusAddingServer" xml:space="preserve">
+    <value>dodavanje servera</value>
+  </data>
+  <data name="StatusDrawingConnectionObjects" xml:space="preserve">
+    <value>Crtanje veza replikacije</value>
+  </data>
+  <data name="StatusDrawingDomains" xml:space="preserve">
+    <value>Crtanje Domena</value>
+  </data>
+  <data name="StatusDrawingRealms" xml:space="preserve">
+    <value>Crtanje vanjskih partnera</value>
+  </data>
+  <data name="StatusDrawingServers" xml:space="preserve">
+    <value>Crtanje Servera</value>
+  </data>
+  <data name="StatusDrawingSiteLinks" xml:space="preserve">
+    <value>Crta veza</value>
+  </data>
+  <data name="StatusDrawingSites" xml:space="preserve">
+    <value>Crtanje Site-ova</value>
+  </data>
+  <data name="StatusDrawingTrusts" xml:space="preserve">
+    <value>Crtanje veza Povjerenja</value>
   </data>
   <data name="TrustDirectionComment" xml:space="preserve">
     <value>Smjer: {0}</value>

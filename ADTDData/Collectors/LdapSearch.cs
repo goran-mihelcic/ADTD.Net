@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.DirectoryServices;
+using System.IO;
 
 namespace Mihelcic.Net.Visio.Data
 {
@@ -125,12 +126,12 @@ namespace Mihelcic.Net.Visio.Data
         {
             try
             {
-                this._searcher = new DirectorySearcher(LdapReader.GetDirectoryEntry(LdapReader.GCPrefix + baseObj, loginInfo));
+                this._searcher = new DirectorySearcher(LdapReader.GetDirectoryEntry(LdapReader.GCPrefixS + baseObj, loginInfo));
                 this.Scope = SearchScope.Base;
                 this.PropertiesToLoad = refAttribute;
                 SearchResult obj = this.GetOne();
 
-                LdapSearch refSearch = new LdapSearch(LdapReader.GetDirectoryEntry(LdapReader.GCPrefix + obj.Properties[refAttribute].ToString(), loginInfo))
+                LdapSearch refSearch = new LdapSearch(LdapReader.GetDirectoryEntry(LdapReader.GCPrefixS + obj.Properties[refAttribute].ToString(), loginInfo))
                 {
                     Scope = SearchScope.Base,
                     PropertiesToLoad = getAttribute
@@ -165,7 +166,7 @@ namespace Mihelcic.Net.Visio.Data
                     result = refSearch.GetOne().Properties[getAttribute].ToString();
                     refSearch = null;
                 }
-                else { result = "No data..."; }
+                else { result = $"{Strings.NoData}..."; }
                 return result;
             }
             catch (Exception ex)
@@ -181,12 +182,12 @@ namespace Mihelcic.Net.Visio.Data
             {
                 if (baseObj != "")
                 {
-                    this._searcher = new DirectorySearcher(LdapReader.GetDirectoryEntry(LdapReader.GCPrefix + baseObj, loginInfo));
+                    this._searcher = new DirectorySearcher(LdapReader.GetDirectoryEntry(LdapReader.GCPrefixS + baseObj, loginInfo));
                     this.Scope = SearchScope.Base;
                     this.PropertiesToLoad = getAttribute;
                     return (this.GetOne()).Properties[getAttribute].ToString();
                 }
-                else { return "No data..."; }
+                else { return $"{Strings.NoData}..."; }
             }
             catch (Exception ex)
             {
