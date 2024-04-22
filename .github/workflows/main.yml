@@ -3,13 +3,18 @@ name: .NET Framework Build and Analysis
 on:
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'
+      releaseType:
+        description: 'Type of Release'
         required: true
-        default: 'warning'
-      tags:
-        description: 'Test scenario tags'
-        required: false
+        default: 'prerelease'
+        type: choice
+        options:
+          - prerelease
+          - production
+      BaseVersion:
+        description: 'Base Build Version'
+        required: true
+        default: '1.0'
 
 jobs:
   build-and-analyze:
@@ -37,8 +42,8 @@ jobs:
       run: |
          $LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
          $PATCH_VERSION=$LATEST_TAG.Split('.')[2]
-         $NEW_PATCH_VERSION=[int]$PATCH_VERSION + 1
-         $NEW_TAG="{0}.{1}" -F $LATEST_TAG.Substring(0, $LATEST_TAG.LastIndexOf('.')),$NEW_PATCH_VERSION
+         if($LATEST_TAG.StartsWith(github.event.inputs.BaseVersion)){$NEW_PATCH_VERSION=[int]$PATCH_VERSION + 1} else {$NEW_PATCH_VERSION=1}
+         $NEW_TAG="{0}.{1}" -F github.event.inputs.BaseVersion,$NEW_PATCH_VERSION
          echo "CALCULATED_VERSION=$NEW_TAG" | Out-File -FilePath $env:GITHUB_ENV -Append
          echo "::set-output name=version::$NEW_TAG"
 
