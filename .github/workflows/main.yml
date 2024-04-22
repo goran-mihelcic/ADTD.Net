@@ -27,8 +27,8 @@ jobs:
     - name: Build the project
       run: msbuild ADTD.Net.sln /p:Configuration=Release /p:Platform="Any CPU" /p:OutputPath=./build
 
-    - name: List directories
-      run: ls -la
+    - name: List all build outputs
+      run: Get-ChildItem -Path . -Recurse -Force | Select-Object FullName, Mode, LastWriteTime, Length | Format-Table -AutoSize
 
     - name: Zip the build
       run: 7z a ADTD.zip ./build/*
