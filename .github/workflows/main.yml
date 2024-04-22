@@ -24,11 +24,12 @@ jobs:
     - name: Calculate version
       id: versioning
       run: |
-        $BASE_VERSION="1.0."
-        $PATCH_VERSION=$(git rev-list --count HEAD)
-        $FULL_VERSION="${BASE_VERSION}${PATCH_VERSION}"
-        echo "CALCULATED_VERSION=$FULL_VERSION" | Out-File -FilePath $env:GITHUB_ENV -Append
-        echo "::set-output name=version::$FULL_VERSION"
+         $LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+         $PATCH_VERSION=$LATEST_TAG.Split('.')[2]
+         $NEW_PATCH_VERSION=[int]$PATCH_VERSION + 1
+         $NEW_TAG="{0}.{1}" -F $LATEST_TAG.Substring(0, $LATEST_TAG.LastIndexOf('.')),$NEW_PATCH_VERSION
+         echo "CALCULATED_VERSION=$NEW_TAG" | Out-File -FilePath $env:GITHUB_ENV -Append
+         echo "::set-output name=version::$NEW_TAG"
 
     - name: Update project file with version
       run: |
