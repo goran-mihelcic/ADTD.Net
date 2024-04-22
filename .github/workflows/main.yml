@@ -40,10 +40,11 @@ jobs:
     - name: Calculate version
       id: versioning
       run: |
+         $BaseVersion = "${{ github.event.inputs.BaseVersion }}"
          $LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
          $PATCH_VERSION=$LATEST_TAG.Split('.')[2]
-         if($LATEST_TAG.StartsWith(github.event.inputs.BaseVersion)){$NEW_PATCH_VERSION=[int]$PATCH_VERSION + 1} else {$NEW_PATCH_VERSION=1}
-         $NEW_TAG="{0}.{1}" -F github.event.inputs.BaseVersion,$NEW_PATCH_VERSION
+         if($LATEST_TAG.StartsWith($BaseVersion)){$NEW_PATCH_VERSION=[int]$PATCH_VERSION + 1} else {$NEW_PATCH_VERSION=1}
+         $NEW_TAG="{0}.{1}" -F $BaseVersion,$NEW_PATCH_VERSION
          echo "CALCULATED_VERSION=$NEW_TAG" | Out-File -FilePath $env:GITHUB_ENV -Append
          echo "::set-output name=version::$NEW_TAG"
 
