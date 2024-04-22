@@ -82,7 +82,7 @@ jobs:
         tag_name: v${{ steps.versioning.outputs.version }}
         release_name: Release v${{ steps.versioning.outputs.version }}
         draft: false
-        prerelease: false
+        prerelease: ${{ github.event.inputs.releaseType == 'prerelease' }}
 
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
