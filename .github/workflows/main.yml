@@ -37,8 +37,7 @@ jobs:
         # Load the project file as XML
         [xml]$csproj = Get-Content $csprojPath
         # Update the version elements
-        $csproj.Project.PropertyGroup[0].AssemblyVersion = $version
-        $csproj.Project.PropertyGroup[0].FileVersion = $version
+        $csproj.Project.PropertyGroup[0].ApplicationVersion = $version
         # Save the changes back to the project file
         $csproj.Save($csprojPath)
         
