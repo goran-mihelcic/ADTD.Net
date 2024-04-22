@@ -21,9 +21,27 @@ jobs:
     - name: Setup MSBuild Path
       uses: microsoft/setup-msbuild@v1.1
 
-    - name: Restore NuGet packages
-      run: nuget restore ADTD.Net.sln
+    - name: Calculate version
+      id: versioning
+      run: |
+        $BASE_VERSION="1.0."
+        $PATCH_VERSION=$(git rev-list --count HEAD)
+        $FULL_VERSION="${BASE_VERSION}${PATCH_VERSION}"
+        echo "CALCULATED_VERSION=$FULL_VERSION" | Out-File -FilePath $env:GITHUB_ENV -Append
+        echo "::set-output name=version::$FULL_VERSION"
 
+    - name: Update project file with version
+      run: |
+        $version = "${{ steps.versioning.outputs.version }}"
+        $csprojPath = ".\\ADTD.Net\\Mihelcic.Net.Visio.Diagrammer.csproj"
+        # Load the project file as XML
+        [xml]$csproj = Get-Content $csprojPath
+        # Update the version elements
+        $csproj.Project.PropertyGroup[0].AssemblyVersion = $version
+        $csproj.Project.PropertyGroup[0].FileVersion = $version
+        # Save the changes back to the project file
+        $csproj.Save($csprojPath)
+        
     - name: Build the project
       run: msbuild ADTD.Net.sln /p:Configuration=Release /p:Platform="Any CPU" /p:OutputPath=./build
 
@@ -45,8 +63,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.sha }}
+        tag_name: v${{ steps.versioning.outputs.version }}
+        release_name: Release v${{ steps.versioning.outputs.version }}
         draft: false
         prerelease: false
 
