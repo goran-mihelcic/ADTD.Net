@@ -31,7 +31,7 @@ jobs:
       run: Get-Location
       
     - name: Zip the build
-      run: 7z a ADTD.zip ./build/*
+      run: 7z a ADTD.zip ./ADTD.Net/build*
 
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v2
