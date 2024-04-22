@@ -1,0 +1,78 @@
+name: .NET Framework Build and Analysis
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags'
+        required: false
+
+jobs:
+  build-and-analyze:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup MSBuild Path
+      uses: microsoft/setup-msbuild@v1.1
+
+    - name: Calculate version
+      id: versioning
+      run: |
+        $BASE_VERSION="1.0."
+        $PATCH_VERSION=$(git rev-list --count HEAD)
+        $FULL_VERSION="${BASE_VERSION}${PATCH_VERSION}"
+        echo "CALCULATED_VERSION=$FULL_VERSION" | Out-File -FilePath $env:GITHUB_ENV -Append
+        echo "::set-output name=version::$FULL_VERSION"
+
+    - name: Update project file with version
+      run: |
+        $version = "${{ steps.versioning.outputs.version }}"
+        $csprojPath = ".\\ADTD.Net\\Mihelcic.Net.Visio.Diagrammer.csproj"
+        # Load the project file as XML
+        [xml]$csproj = Get-Content $csprojPath
+        # Update the version elements
+        $csproj.Project.PropertyGroup[0].ApplicationVersion = $version
+        # Save the changes back to the project file
+        $csproj.Save($csprojPath)
+        
+    - name: Build the project
+      run: msbuild ADTD.Net.sln /p:Configuration=Release /p:Platform="Any CPU" /p:OutputPath=./build
+
+    - name: Display Current Directory
+      run: Get-Location
+      
+    - name: Zip the build
+      run: 7z a ADTD.zip ./ADTD.Net/build*
+
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Compiled-Application
+        path: ./ADTD.zip
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.versioning.outputs.version }}
+        release_name: Release v${{ steps.versioning.outputs.version }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./ADTD.zip
+        asset_name: ADTD.zip
+        asset_content_type: application/zip
