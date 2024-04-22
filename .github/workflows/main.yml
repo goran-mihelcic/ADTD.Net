@@ -1,4 +1,4 @@
-name: .NET Framework Build and Analysis
+name: Deploy Release
 
 on:
   workflow_dispatch:
