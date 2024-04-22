@@ -285,7 +285,6 @@ namespace Mihelcic.Net.Visio.Diagrammer
         {
             System.Windows.Application.Current.Dispatcher.Invoke(() =>
             {
-                //this.StatusText.Text = message;
                 StatusList.AddStatus(message);
             });
         }
