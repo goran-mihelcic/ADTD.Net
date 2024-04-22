@@ -18,9 +18,11 @@ namespace Mihelcic.Net.Visio.Diagrammer
         public bool ValidCredentials { get; set; }
         public Password(ApplicationConfiguration configuration)
         {
+            if (configuration == null || (String.IsNullOrWhiteSpace(configuration.Server) && String.IsNullOrWhiteSpace(configuration.DnsForestName)))
+                throw new ArgumentException("Missing server or forest data", "configuration");
             InitializeComponent();
             _configuration = configuration;
-            _dcName = _configuration.Server;
+            _dcName = String.IsNullOrWhiteSpace(_configuration.Server) ? _configuration.DnsForestName : _configuration.Server;
             txtUserName.Text = _configuration.Login.UserName;
             txtDomain.Text = String.IsNullOrWhiteSpace(_configuration.Login.UserDomain) ? _configuration.DnsForestName : _configuration.Login.UserDomain;
         }

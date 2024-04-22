@@ -146,7 +146,7 @@ namespace Mihelcic.Net.Visio.Diagrammer
 
         private void mnuFileExit_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            ShutDown();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -223,9 +223,14 @@ namespace Mihelcic.Net.Visio.Diagrammer
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
         {
+            ShutDown();
+        }
+
+        private void ShutDown()
+        {
             _scheduler.Cancel();
             _configuration.Save();
-            this.Close();
+            Application.Current.Shutdown();
         }
 
         private void SetVisibility(bool visibility)
@@ -309,6 +314,7 @@ namespace Mihelcic.Net.Visio.Diagrammer
             catch (Exception ex)
             {
                 Logger.TraceException(ex.ToString());
+                ReportProgress(ex.Message);
             }
         }
 
