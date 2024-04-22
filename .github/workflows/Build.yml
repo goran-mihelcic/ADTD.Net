@@ -1,4 +1,4 @@
-name: .NET Build Workflow
+name: Test Build 
 
 on:
   pull_request:
