@@ -21,6 +21,17 @@ jobs:
     - name: Setup MSBuild Path
       uses: microsoft/setup-msbuild@v1.1
 
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # Important to fetch all tags and history
+
+    - name: Fetch all tags
+      run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+
+    - name: List tags
+      run: git tag
+
     - name: Calculate version
       id: versioning
       run: |
