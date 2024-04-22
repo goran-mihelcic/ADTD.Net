@@ -1,0 +1,22 @@
+name: Test Build 
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-analyze:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup MSBuild Path
+      uses: microsoft/setup-msbuild@v1.1
+
+    - name: Build the project
+      run: msbuild ADTD.Net.sln /p:Configuration=Debug /p:Platform="Any CPU" /p:OutputPath=./build

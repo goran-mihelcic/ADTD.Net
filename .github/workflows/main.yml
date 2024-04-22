@@ -1,15 +1,20 @@
-name: .NET Framework Build and Analysis
+name: Deploy Release
 
 on:
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'
+      releaseType:
+        description: 'Type of Release'
         required: true
-        default: 'warning'
-      tags:
-        description: 'Test scenario tags'
-        required: false
+        default: 'prerelease'
+        type: choice
+        options:
+          - prerelease
+          - production
+      BaseVersion:
+        description: 'Base Build Version'
+        required: true
+        default: '1.0'
 
 jobs:
   build-and-analyze:
@@ -35,10 +40,11 @@ jobs:
     - name: Calculate version
       id: versioning
       run: |
+         $BaseVersion = "${{ github.event.inputs.BaseVersion }}"
          $LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
          $PATCH_VERSION=$LATEST_TAG.Split('.')[2]
-         $NEW_PATCH_VERSION=[int]$PATCH_VERSION + 1
-         $NEW_TAG="{0}.{1}" -F $LATEST_TAG.Substring(0, $LATEST_TAG.LastIndexOf('.')),$NEW_PATCH_VERSION
+         if($LATEST_TAG.StartsWith($BaseVersion)){$NEW_PATCH_VERSION=[int]$PATCH_VERSION + 1} else {$NEW_PATCH_VERSION=1}
+         $NEW_TAG="{0}.{1}" -F $BaseVersion,$NEW_PATCH_VERSION
          echo "CALCULATED_VERSION=$NEW_TAG" | Out-File -FilePath $env:GITHUB_ENV -Append
          echo "::set-output name=version::$NEW_TAG"
 
@@ -60,7 +66,7 @@ jobs:
       run: Get-Location
       
     - name: Zip the build
-      run: 7z a ADTD.zip ./Mihelcic.Net.Visio.Diagrammer/build*
+      run: 7z a ADTD.zip ./Mihelcic.Net.Visio.Diagrammer/build/*
 
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v2
@@ -74,10 +80,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ steps.versioning.outputs.version }}
-        release_name: Release v${{ steps.versioning.outputs.version }}
+        tag_name: ${{ steps.versioning.outputs.version }}
+        release_name: Release ${{ steps.versioning.outputs.version }}
         draft: false
-        prerelease: false
+        prerelease: ${{ github.event.inputs.releaseType == 'prerelease' }}
 
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
