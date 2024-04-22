@@ -33,7 +33,7 @@ jobs:
     - name: Update project file with version
       run: |
         $version = "${{ steps.versioning.outputs.version }}"
-        $csprojPath = ".\\ADTD.Net\\Mihelcic.Net.Visio.Diagrammer.csproj"
+        $csprojPath = ".\\Mihelcic.Net.Visio.Diagrammer\\Mihelcic.Net.Visio.Diagrammer.csproj"
         # Load the project file as XML
         [xml]$csproj = Get-Content $csprojPath
         # Update the version elements
@@ -48,7 +48,7 @@ jobs:
       run: Get-Location
       
     - name: Zip the build
-      run: 7z a ADTD.zip ./ADTD.Net/build*
+      run: 7z a ADTD.zip ./Mihelcic.Net.Visio.Diagrammer/build*
 
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v2
