@@ -15,7 +15,6 @@ namespace Mihelcic.Net.Visio.Common
 {
     public class Scheduler
     {
-        //public delegate void ReportProgress(string message);
         public delegate void EndRun(string message);
 
         #region Private Fields
@@ -53,16 +52,21 @@ namespace Mihelcic.Net.Visio.Common
         // Call this method to request cancellation of all workers
         public void Cancel()
         {
+            List<BackgroundWorker> workersToCancel;
             lock (_workerLock)
             {
-                foreach (var worker in _workers)
+                workersToCancel = new List<BackgroundWorker>(_workers);
+            }
+            foreach (var worker in workersToCancel)
+            {
+                if (worker.WorkerSupportsCancellation)
                 {
-                    if (worker.WorkerSupportsCancellation)
-                    {
-                        worker.CancelAsync();
-                        worker.Dispose();
-                    }
+                    worker.CancelAsync();
                 }
+            }
+            foreach (var worker in workersToCancel)
+            {
+                worker.Dispose();
             }
         }
 

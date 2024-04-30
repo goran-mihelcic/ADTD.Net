@@ -20,20 +20,28 @@ namespace Mihelcic.Net.Visio.Diagrammer
 
     public partial class MainWindow : Window
     {
-        readonly ToolSelection _selection = new ToolSelection();
-        ApplicationConfiguration _configuration;
-        readonly Scheduler _scheduler;
-        public Statuses StatusList = new Statuses();
+        #region Private Fields
 
+        ApplicationConfiguration _configuration; // Holds configuration settings for the application.
+        readonly Scheduler _scheduler; // Executes in separate thread data collection and diagram creation
+        public Statuses StatusList = new Statuses(); // Keeps Application Status message history
+
+        #endregion
+
+        
         public ApplicationConfiguration Configuration { get { return _configuration; } set { _configuration = value; } }
 
+        /// <summary>
+        /// Provides the main window for the application, managing user interactions and the overall application state.
+        /// </summary>
         public MainWindow()
         {
-            Properties.Settings.Default.Save();
+            Properties.Settings.Default.Save();  // Saves the current settings for the application.
             _configuration = new ApplicationConfiguration
             {
-                DomainJoined = NETAPI32.IsInADDomain()
+                DomainJoined = NETAPI32.IsInADDomain()  // Determines if the machine is part of an Active Directory domain.
             };
+            // Configure Forest and DC information if the machine is domain joined.
             if (_configuration.DomainJoined)
             {
                 DCInfo dcInfo = NETAPI32.DsGetDcName(null, null, null, NETAPI32.GetDcFlags.ForceRediscovery | NETAPI32.GetDcFlags.OnlyLdapNeeded, null);
@@ -44,6 +52,7 @@ namespace Mihelcic.Net.Visio.Diagrammer
                         _configuration.Server = dcInfo.Name.Trim('\\');
                 }
             }
+            // If not domain joined find if machine is Azure AD joined.
             else
             {
                 Join_Info joinInfo = NETAPI32.GetAadJoinInformation();
@@ -53,25 +62,28 @@ namespace Mihelcic.Net.Visio.Diagrammer
                 }
             }
 
-            InitializeComponent();
+            InitializeComponent(); // Initializes the XAML UI components.
 
-            StatusText.DataContext = StatusList;
+            StatusText.DataContext = StatusList; // Binds status text to the status list for display.
 
-            _scheduler = new Scheduler(ReportProgress, EndSchedule);
+            _scheduler = new Scheduler(ReportProgress, EndSchedule); // Initialize Drawing Task scheduler
 
+            // Setup selection and properties updating with configurations.
             mySelection.SetConfiguration(Configuration);
             mySelection.DoUpdate = new UpdateSettings(myProperties.SetConfiguration);
             myProperties.SetConfiguration(Configuration);
-            Logger.Init("ADTD.Net");
 
+            Logger.Init("ADTD.Net"); // Initializes application logging.
+
+            // Configure logging paths based on the settings, with defaults if none specified.
             ConfigurationParameter debugParam = _configuration.Options.FirstOrDefault(p => p.Name == "DebugPath");
             string debugPath = debugParam == null ? "ADTD.log" : Path.Combine(Logger.ParsePath(debugParam.Value.ToString()), "ADTD.log");
 
             ConfigurationParameter traceParam = _configuration.Options.FirstOrDefault(p => p.Name == "TracePath");
             string tracePath = traceParam == null ? "ADTD.trc.log" : Path.Combine(Logger.ParsePath(traceParam.Value.ToString()), "ADTD.trc.log");
 
-            Logger.RegisterTrace(tracePath);
-            Logger.RegisterDebug(debugPath);
+            Logger.RegisterTrace(tracePath); // Registers trace logging.
+            Logger.RegisterDebug(debugPath); // Registers debug logging.
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

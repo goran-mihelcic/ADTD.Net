@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Arrange Diagram and generates Visio document")]
 [assembly: AssemblyConfiguration("")]
 
-[assembly: AssemblyVersion("2.0.0.21")]
+[assembly: AssemblyVersion("2.0.0.22")]
 [assembly: AssemblyCompany("Mihelcic.net")]
 [assembly: AssemblyFileVersion("2.0.0.0")]
 [assembly: ComVisible(false)]
