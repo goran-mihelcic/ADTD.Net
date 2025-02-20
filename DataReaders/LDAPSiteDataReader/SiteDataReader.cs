@@ -278,7 +278,7 @@
                 {
                     statusCallback($"{Strings.StatusDrawingSiteLinks} ({i})");
                     string[] sites = CastRVPC(slResult.Properties[LdapAttrNames.SiteList]);
-                    if (sites.Any(s => this.Data.GetNode(ShapeRsx.SitePfx, s) != null))
+                    if (sites != null && sites.Any(s => this.Data.GetNode(ShapeRsx.SitePfx, s) != null))
                     {
                         string slName = slResult.Properties[LdapAttrNames.Name].ToString();
                         if (!_allSites) sites = new string[] { $"{LdapStrings.CnComponent}{_siteSelection.Name}" };
