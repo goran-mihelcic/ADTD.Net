@@ -69,7 +69,7 @@ jobs:
       run: 7z a ADTD.zip ./Mihelcic.Net.Visio.Diagrammer/build/*
 
     - name: Upload Build Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: Compiled-Application
         path: ./ADTD.zip
